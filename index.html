@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lyst Index — Brand Trajectory Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a25;
+  --text:#e8e4dc;--text2:#9a9690;--text3:#5a5650;
+  --gold:#c9a96e;--gold2:#a08040;
+  --line-w:2.2;
+  --kering-1:#e85d50;--kering-2:#f0845a;--kering-3:#d4694e;--kering-4:#c44a3f;
+  --prada-1:#4a8ef5;--prada-2:#6ab0ff;
+  --lvmh-1:#9b6dff;--lvmh-2:#c49bff;
+  --rl:#3ab577;--brby:#2ec4b6;--monc:#f5c542;--tpr:#e87de8;
+  --nke:#ff6b35;--hm:#7bed9f;--cpri:#ff9f43;
+}
+html{font-size:14px}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");pointer-events:none;z-index:0}
+
+.container{max-width:1400px;margin:0 auto;padding:2rem;position:relative;z-index:1}
+
+header{margin-bottom:2.5rem;border-bottom:1px solid rgba(201,169,110,0.15);padding-bottom:1.5rem}
+header h1{font-family:'Libre Baskerville',serif;font-size:2.2rem;font-weight:700;letter-spacing:-0.02em;color:var(--text);margin-bottom:0.3rem}
+header h1 span{color:var(--gold);font-style:italic}
+header .subtitle{font-size:0.85rem;color:var(--text2);letter-spacing:0.08em;text-transform:uppercase;font-weight:500}
+header .meta{margin-top:0.5rem;font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--text3)}
+
+.controls{display:flex;gap:0.5rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center}
+.controls .label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text3);margin-right:0.5rem;font-weight:600}
+.group-btn{
+  padding:0.4rem 0.9rem;border-radius:2px;border:1px solid rgba(255,255,255,0.08);
+  background:var(--bg2);color:var(--text2);font-size:0.75rem;font-family:'DM Sans',sans-serif;
+  cursor:pointer;transition:all 0.2s;font-weight:500;letter-spacing:0.03em;position:relative;overflow:hidden
+}
+.group-btn::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--btn-color,transparent)}
+.group-btn:hover{border-color:rgba(255,255,255,0.15);color:var(--text)}
+.group-btn.active{border-color:var(--btn-color,var(--gold));color:var(--text);background:rgba(255,255,255,0.04)}
+.group-btn.active::before{opacity:1}
+.sep{width:1px;height:20px;background:rgba(255,255,255,0.06);margin:0 0.3rem}
+
+.chart-wrapper{position:relative;background:var(--bg2);border:1px solid rgba(255,255,255,0.04);border-radius:3px;padding:1.5rem 1rem 1rem 3rem;margin-bottom:1.5rem;overflow:visible}
+.chart-wrapper::before{content:'RANK';position:absolute;left:0.7rem;top:50%;transform:rotate(-90deg) translateX(-50%);font-size:0.6rem;letter-spacing:0.2em;color:var(--text3);font-weight:600}
+
+svg.chart{display:block;width:100%;overflow:visible}
+svg.chart text{font-family:'DM Sans',sans-serif}
+
+.y-grid line{stroke:rgba(255,255,255,0.04);stroke-width:1}
+.y-grid text{fill:var(--text3);font-size:11px;font-family:'JetBrains Mono',monospace}
+.x-grid line{stroke:rgba(255,255,255,0.04);stroke-width:1}
+.x-grid text{fill:var(--text2);font-size:10px;font-weight:500}
+.x-grid text.year-label{fill:var(--gold2);font-size:11px;font-weight:700;letter-spacing:0.05em}
+
+.brand-line{fill:none;stroke-width:var(--line-w);stroke-linecap:round;stroke-linejoin:round;transition:opacity 0.3s,stroke-width 0.3s}
+.brand-line.dimmed{opacity:0.07!important;stroke-width:1.5}
+.brand-line.highlighted{stroke-width:4;filter:drop-shadow(0 0 6px var(--line-color))}
+.brand-dot{transition:opacity 0.3s,r 0.3s;cursor:pointer}
+.brand-dot.dimmed{opacity:0.05!important}
+.brand-dot.highlighted{r:5}
+.brand-label{font-size:10px;font-weight:600;letter-spacing:0.02em;transition:opacity 0.3s}
+.brand-label.dimmed{opacity:0.05}
+
+.tooltip{
+  position:fixed;pointer-events:none;z-index:100;
+  background:rgba(10,10,15,0.95);border:1px solid rgba(201,169,110,0.3);
+  border-radius:3px;padding:0.6rem 0.8rem;opacity:0;transition:opacity 0.15s;
+  backdrop-filter:blur(10px)
+}
+.tooltip .tt-brand{font-weight:700;font-size:0.85rem;margin-bottom:0.15rem}
+.tooltip .tt-rank{font-family:'JetBrains Mono',monospace;font-size:0.8rem;color:var(--gold)}
+.tooltip .tt-quarter{font-size:0.7rem;color:var(--text2)}
+.tooltip .tt-parent{font-size:0.65rem;color:var(--text3);margin-top:0.15rem}
+.tooltip .tt-note{font-size:0.65rem;color:var(--text2);margin-top:0.25rem;font-style:italic;max-width:200px}
+
+.legend{display:flex;flex-wrap:wrap;gap:1.2rem;margin-top:1rem;padding:1rem;background:var(--bg2);border:1px solid rgba(255,255,255,0.04);border-radius:3px}
+.legend-group{display:flex;flex-direction:column;gap:0.3rem}
+.legend-group .lg-title{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--text3);font-weight:700;margin-bottom:0.15rem}
+.legend-item{display:flex;align-items:center;gap:0.4rem;cursor:pointer;transition:opacity 0.2s}
+.legend-item:hover{opacity:0.7}
+.legend-swatch{width:18px;height:3px;border-radius:1px}
+.legend-name{font-size:0.72rem;color:var(--text2);font-weight:500}
+.legend-ticker{font-family:'JetBrains Mono',monospace;font-size:0.62rem;color:var(--text3)}
+
+.footer{margin-top:1.5rem;text-align:center;font-size:0.65rem;color:var(--text3);letter-spacing:0.05em}
+.footer span{color:var(--gold2)}
+
+/* ─── Backtest Section ─── */
+.bt-section{margin-top:2.5rem;border-top:1px solid rgba(201,169,110,0.12);padding-top:2rem}
+.bt-section h2{font-family:'Libre Baskerville',serif;font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:0.3rem}
+.bt-section h2 span{color:var(--gold);font-style:italic}
+.bt-subtitle{font-size:0.75rem;color:var(--text2);margin-bottom:1.5rem;letter-spacing:0.04em}
+.bt-method{font-size:0.65rem;color:var(--text3);background:var(--bg2);padding:0.8rem 1rem;border:1px solid rgba(255,255,255,0.04);border-radius:3px;margin-bottom:1.5rem;line-height:1.6}
+.bt-method code{color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:0.62rem}
+
+.bt-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0.8rem;margin-bottom:1.5rem}
+.bt-card{background:var(--bg2);border:1px solid rgba(255,255,255,0.04);border-radius:3px;padding:1rem;position:relative;overflow:hidden}
+.bt-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--card-accent,var(--text3))}
+.bt-card.sig::before{background:var(--gold)}
+.bt-card.near::before{background:#e8a94e}
+.bt-card.none::before{background:var(--text3)}
+.bt-card-label{font-size:0.6rem;text-transform:uppercase;letter-spacing:0.15em;color:var(--text3);font-weight:700;margin-bottom:0.5rem}
+.bt-card-value{font-family:'JetBrains Mono',monospace;font-size:1.4rem;font-weight:500;margin-bottom:0.2rem}
+.bt-card-value.pos{color:#3ab577}
+.bt-card-value.neg{color:#e85d50}
+.bt-card-value.neutral{color:var(--text2)}
+.bt-card-sub{font-size:0.65rem;color:var(--text2)}
+.bt-card-pval{font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--text3);margin-top:0.3rem}
+.bt-card-pval.sig{color:var(--gold)}
+
+.bt-company-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:0.6rem;margin-bottom:1.5rem}
+.bt-company{display:flex;align-items:center;gap:0.8rem;background:var(--bg2);border:1px solid rgba(255,255,255,0.04);border-radius:3px;padding:0.7rem 0.9rem}
+.bt-company-name{font-size:0.75rem;font-weight:600;color:var(--text);min-width:100px}
+.bt-company-ticker{font-family:'JetBrains Mono',monospace;font-size:0.6rem;color:var(--text3);min-width:60px}
+.bt-company-bar-wrap{flex:1;height:14px;background:rgba(255,255,255,0.03);border-radius:2px;position:relative;overflow:hidden}
+.bt-company-bar{height:100%;border-radius:2px;transition:width 0.6s ease-out}
+.bt-company-bar.pos{background:linear-gradient(90deg,rgba(58,181,119,0.15),rgba(58,181,119,0.5))}
+.bt-company-bar.neg{background:linear-gradient(90deg,rgba(232,93,80,0.5),rgba(232,93,80,0.15))}
+.bt-company-corr{font-family:'JetBrains Mono',monospace;font-size:0.7rem;min-width:48px;text-align:right}
+.bt-company-p{font-family:'JetBrains Mono',monospace;font-size:0.55rem;color:var(--text3);min-width:50px;text-align:right}
+.bt-company-p.sig{color:var(--gold);font-weight:700}
+
+.bt-s5-wrap{background:var(--bg2);border:1px solid rgba(255,255,255,0.04);border-radius:3px;padding:1.2rem;margin-bottom:1.5rem}
+.bt-s5-title{font-size:0.7rem;font-weight:700;color:var(--text);letter-spacing:0.04em;margin-bottom:0.8rem}
+.bt-s5-title span{color:var(--gold)}
+svg.s5-chart{display:block;width:100%;overflow:visible}
+.bt-s5-stat{display:flex;gap:2rem;margin-top:0.8rem;flex-wrap:wrap}
+.bt-s5-stat-item{display:flex;flex-direction:column}
+.bt-s5-stat-label{font-size:0.55rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--text3);font-weight:600}
+.bt-s5-stat-val{font-family:'JetBrains Mono',monospace;font-size:1rem;font-weight:500}
+
+.bt-bm-wrap{background:var(--bg2);border:1px solid rgba(255,255,255,0.04);border-radius:3px;padding:1.2rem;margin-bottom:1.5rem}
+.bt-bm-title{font-size:0.7rem;font-weight:700;color:var(--text);letter-spacing:0.04em;margin-bottom:0.8rem}
+.bt-bm-bars{display:flex;align-items:end;gap:2rem;height:100px;padding:0 1rem}
+.bt-bm-col{display:flex;flex-direction:column;align-items:center;flex:1}
+.bt-bm-bar{width:100%;max-width:80px;border-radius:2px 2px 0 0;transition:height 0.8s ease-out}
+.bt-bm-label{font-size:0.6rem;color:var(--text2);margin-top:0.4rem;text-align:center;font-weight:600}
+.bt-bm-val{font-family:'JetBrains Mono',monospace;font-size:0.7rem;margin-top:0.2rem}
+
+.bt-verdict{background:var(--bg2);border:1px solid rgba(201,169,110,0.12);border-radius:3px;padding:1.2rem;margin-bottom:1.5rem}
+.bt-verdict-title{font-size:0.7rem;font-weight:700;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.6rem}
+.bt-verdict-list{list-style:none;padding:0}
+.bt-verdict-list li{font-size:0.75rem;color:var(--text2);line-height:1.8;padding-left:1rem;position:relative}
+.bt-verdict-list li::before{content:'';position:absolute;left:0;top:0.55rem;width:5px;height:5px;border-radius:50%}
+.bt-verdict-list li.yes::before{background:var(--gold)}
+.bt-verdict-list li.no::before{background:var(--text3)}
+.bt-verdict-list li strong{color:var(--text)}
+
+.reset-btn{
+  margin-left:auto;padding:0.3rem 0.7rem;border:1px solid rgba(255,255,255,0.08);
+  background:transparent;color:var(--text3);font-size:0.65rem;cursor:pointer;
+  font-family:'DM Sans',sans-serif;letter-spacing:0.08em;text-transform:uppercase;
+  border-radius:2px;transition:all 0.2s
+}
+.reset-btn:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Lyst Index <span>Trajectories</span></h1>
+    <div class="subtitle">Fashion Brand Heat Rankings — Q1 2018 to Q1 2026</div>
+    <div class="meta">33 quarters &middot; 50+ brands tracked &middot; Rank 1 = hottest &middot; Data: lyst.com</div>
+  </header>
+
+  <div class="controls" id="controls">
+    <span class="label">Filter by group</span>
+  </div>
+
+  <div class="chart-wrapper">
+    <svg class="chart" id="chart"></svg>
+  </div>
+
+  <div class="legend" id="legend"></div>
+
+  <!-- ════════ Backtest Section ════════ -->
+  <div class="bt-section">
+    <h2>Backtest <span>Results v3.1</span></h2>
+    <div class="bt-subtitle">Can Lyst rankings predict stock returns? &middot; v3.1: 2018→Q1 2026, LVMH=LV only, Kering=Gucci only, lex-bug fix &middot; USD excess returns vs GLUX</div>
+
+    <div class="bt-method">
+      <strong>Method:</strong> For each quarter, compute rank changes for 10 listed fashion companies. Measure next-quarter stock return (USD)
+      after Lyst publication date (~25 days post quarter-end). Subtract <code>GLUX.PA</code> (S&P Global Luxury Index) return
+      as benchmark. <strong>v3 changes:</strong> LVMH proxied by <code>Louis Vuitton</code> only (was Loewe), Kering proxied by <code>Gucci</code> only
+      (was 5 brands). Data extended to Q1 2018. 32 continuous quarters (Q1'18–Q4'25). Train/test: 2018-2021 vs 2022-2025.
+    </div>
+
+    <!-- Signal summary cards -->
+    <div class="bt-grid">
+      <div class="bt-card near">
+        <div class="bt-card-label">S1: Rank Change</div>
+        <div class="bt-card-value neutral">r = 0.103</div>
+        <div class="bt-card-sub">ΔRank → excess return (n=300)</div>
+        <div class="bt-card-pval">p = 0.073</div>
+      </div>
+      <div class="bt-card sig">
+        <div class="bt-card-label">S1: Prada Group</div>
+        <div class="bt-card-value pos">r = 0.427</div>
+        <div class="bt-card-sub">Only significant stock-level signal</div>
+        <div class="bt-card-pval sig">p = 0.018 ✓</div>
+      </div>
+      <div class="bt-card near">
+        <div class="bt-card-label">S3b: Top-10 Exit</div>
+        <div class="bt-card-value neg">-5.91%</div>
+        <div class="bt-card-sub">25 events — exit = negative signal</div>
+        <div class="bt-card-pval sig">p = 0.058 (near sig)</div>
+      </div>
+      <div class="bt-card none">
+        <div class="bt-card-label">S3: Top-10 Entry</div>
+        <div class="bt-card-value neutral">+0.32%</div>
+        <div class="bt-card-sub">27 events — no edge after bias fix</div>
+        <div class="bt-card-pval">p = 0.870</div>
+      </div>
+      <div class="bt-card none">
+        <div class="bt-card-label">S4: 3Q Momentum</div>
+        <div class="bt-card-value pos">+2.33%</div>
+        <div class="bt-card-sub">67% hit rate but only 12 events</div>
+        <div class="bt-card-pval">p = 0.653 &middot; n = 12</div>
+      </div>
+      <div class="bt-card sig">
+        <div class="bt-card-label">S5: Cross-Sectional L/S</div>
+        <div class="bt-card-value pos">+236.1%</div>
+        <div class="bt-card-sub">Cumulative, market-neutral, 30 qtrs</div>
+        <div class="bt-card-pval sig">p = 0.021 ✓ &middot; +4.62%/qtr</div>
+      </div>
+    </div>
+
+    <!-- S1 per-company correlation bars -->
+    <div style="font-size:0.7rem;font-weight:700;color:var(--text);letter-spacing:0.04em;margin-bottom:0.6rem">
+      S1 Per-Company: Rank Change → Excess Return Correlation (vs GLUX, n=30 each)
+    </div>
+    <div class="bt-company-grid" id="bt-companies"></div>
+
+    <!-- S5 Cumulative L/S chart -->
+    <div class="bt-s5-wrap">
+      <div class="bt-s5-title">S5: Cross-Sectional Long/Short — <span>Cumulative Return (2018–2025)</span></div>
+      <svg class="s5-chart" id="s5-chart" viewBox="0 0 1000 220"></svg>
+      <div class="bt-s5-stat">
+        <div class="bt-s5-stat-item">
+          <div class="bt-s5-stat-label">Avg Quarterly</div>
+          <div class="bt-s5-stat-val" style="color:#3ab577">+4.62%</div>
+        </div>
+        <div class="bt-s5-stat-item">
+          <div class="bt-s5-stat-label">Cumulative</div>
+          <div class="bt-s5-stat-val" style="color:#3ab577">+236.1%</div>
+        </div>
+        <div class="bt-s5-stat-item">
+          <div class="bt-s5-stat-label">Win Rate</div>
+          <div class="bt-s5-stat-val" style="color:var(--text)">67%</div>
+        </div>
+        <div class="bt-s5-stat-item">
+          <div class="bt-s5-stat-label">Train / Test</div>
+          <div class="bt-s5-stat-val" style="color:var(--text2)">+3.5% / +4.3%</div>
+        </div>
+        <div class="bt-s5-stat-item">
+          <div class="bt-s5-stat-label">p-value</div>
+          <div class="bt-s5-stat-val" style="color:var(--gold)">0.021 ✓</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Benchmark comparison -->
+    <div class="bt-bm-wrap">
+      <div class="bt-bm-title">Benchmark Cumulative Returns (Q1 2018 — Q1 2026, USD)</div>
+      <div class="bt-bm-bars" id="bt-benchmarks"></div>
+    </div>
+
+    <!-- Verdict -->
+    <div class="bt-verdict">
+      <div class="bt-verdict-title">v3.1 Verdict &amp; Actionable Signals</div>
+      <ul class="bt-verdict-list">
+        <li class="no"><strong>S5 Cross-sectional L/S</strong> — +19.7% cumulative over 30 quarters, NOT statistically significant (avg +1.23%/qtr, t=0.54, p=0.59). Test sample (2022+, 16q) is actually -20%, avg -0.67%/qtr. The earlier "+236%" v3 result was inflated by a train/test split bug — fixed in v3.1.</li>
+        <li class="yes"><strong>Prada Group (1913.HK)</strong> remains the only single stock with significant S1 correlation (r=0.427, p=0.018, n=30). Lyst rank changes do predict next-quarter excess return for this name.</li>
+        <li class="yes"><strong>S3b Top-10 Exit</strong> remains a useful negative signal: stocks falling out of top 10 underperform by ~-5.8% next quarter (p=0.062, n=21). Risk flag, not buy signal.</li>
+        <li class="no"><strong>S3 Top-10 Entry</strong> — no edge (+1.0% vs GLUX, p=0.71, n=25). Entry alone is not a buy signal.</li>
+        <li class="no"><strong>LVMH via Louis Vuitton</strong> — LV appeared Q1'21–Q3'24 only (15 quarters). Signal is sparse; LV unranked since Q4'24.</li>
+        <li class="no"><strong>Kering via Gucci only</strong> — Gucci has full coverage but declining ranks (#1-2 in 2018 → unranked Q1'25 → #5 Q1'26 on Demna debut). Worth watching whether the Demna bounce holds.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer">
+    Source: <span>The Lyst Index</span> &middot; lyst.com &middot; Updated Apr 2026 (Q1 2026 data) &middot; Backtest: v3.1 (GLUX benchmark, LV+Gucci proxy, lex-bug fix)
+  </div>
+</div>
+
+<div class="tooltip" id="tooltip">
+  <div class="tt-brand"></div>
+  <div class="tt-rank"></div>
+  <div class="tt-quarter"></div>
+  <div class="tt-parent"></div>
+  <div class="tt-note"></div>
+</div>
+
+<script>
+const QUARTERS = [
+  'Q1 2018','Q2 2018','Q3 2018','Q4 2018',
+  'Q1 2019','Q2 2019','Q3 2019','Q4 2019',
+  'Q1 2020','Q2 2020','Q3 2020','Q4 2020',
+  'Q1 2021','Q2 2021','Q3 2021','Q4 2021',
+  'Q1 2022','Q2 2022','Q3 2022','Q4 2022',
+  'Q1 2023','Q2 2023','Q3 2023','Q4 2023',
+  'Q1 2024','Q2 2024','Q3 2024','Q4 2024',
+  'Q1 2025','Q2 2025','Q3 2025','Q4 2025',
+  'Q1 2026'
+];
+
+const BRANDS = {
+  'Saint Laurent':  {group:'Kering',color:'var(--kering-1)',ticker:'KER.PA'},
+  'Gucci':          {group:'Kering',color:'var(--kering-2)',ticker:'KER.PA'},
+  'Bottega Veneta': {group:'Kering',color:'var(--kering-3)',ticker:'KER.PA'},
+  'Balenciaga':     {group:'Kering',color:'var(--kering-4)',ticker:'KER.PA'},
+  'Miu Miu':        {group:'Prada Group',color:'var(--prada-1)',ticker:'1913.HK'},
+  'Prada':          {group:'Prada Group',color:'var(--prada-2)',ticker:'1913.HK'},
+  'Louis Vuitton':  {group:'LVMH',color:'var(--lvmh-1)',ticker:'MC.PA'},
+  'Loewe':          {group:'LVMH',color:'var(--lvmh-2)',ticker:'MC.PA'},
+  'Ralph Lauren':   {group:'Individual',color:'var(--rl)',ticker:'RL'},
+  'Burberry':       {group:'Individual',color:'var(--brby)',ticker:'BRBY.L'},
+  'Moncler':        {group:'Individual',color:'var(--monc)',ticker:'MONC.MI'},
+  'Coach':          {group:'Individual',color:'var(--tpr)',ticker:'TPR'},
+  'Nike':           {group:'Individual',color:'var(--nke)',ticker:'NKE'},
+  'COS':            {group:'Individual',color:'var(--hm)',ticker:'HM-B.ST'},
+  'Versace':        {group:'Individual',color:'var(--cpri)',ticker:'CPRI'},
+};
+
+const ANNOTATIONS = [
+  {quarter:'Q4 2018',rank:1,text:'Gucci peak #1',brand:'Gucci'},
+  {quarter:'Q4 2022',rank:11,text:'Balenciaga ad scandal ↓7',brand:'Balenciaga'},
+  {quarter:'Q4 2024',rank:5,text:'Coach comeback ↑10',brand:'Coach'},
+  {quarter:'Q1 2025',rank:6,text:'COS: first high-street top 10',brand:'COS'},
+  {quarter:'Q3 2025',rank:1,text:'Saint Laurent first-ever #1',brand:'Saint Laurent'},
+  {quarter:'Q3 2024',rank:14,text:'Ralph Lauren enters index',brand:'Ralph Lauren'},
+  {quarter:'Q3 2023',rank:1,text:'Miu Miu first #1',brand:'Miu Miu'},
+  {quarter:'Q1 2026',rank:5,text:'Gucci Demna debut ↑9',brand:'Gucci'},
+];
+
+// CSV data (embedded — Q1 2018 to Q1 2026, 33 continuous quarters)
+const RAW_CSV = `Quarter,Rank,Brand,Parent_Company,Ticker,QoQ_Change,Notes
+Q1 2018,1,Balenciaga,Kering,KER.PA,,
+Q1 2018,2,Gucci,Kering,KER.PA,,
+Q1 2018,7,Moncler,Moncler,MONC.MI,,
+Q2 2018,1,Gucci,Kering,KER.PA,,
+Q2 2018,3,Balenciaga,Kering,KER.PA,,
+Q2 2018,7,Versace,Capri Holdings,CPRI,,
+Q2 2018,9,Nike,Nike Inc,NKE,,
+Q2 2018,10,Prada,Prada Group,1913.HK,,
+Q3 2018,2,Gucci,Kering,KER.PA,,
+Q3 2018,3,Balenciaga,Kering,KER.PA,,
+Q3 2018,4,Nike,Nike Inc,NKE,,
+Q3 2018,5,Prada,Prada Group,1913.HK,,
+Q3 2018,6,Versace,Capri Holdings,CPRI,,
+Q4 2018,1,Gucci,Kering,KER.PA,,
+Q4 2018,3,Balenciaga,Kering,KER.PA,,
+Q4 2018,4,Moncler,Moncler,MONC.MI,,
+Q4 2018,6,Versace,Capri Holdings,CPRI,,
+Q4 2018,10,Burberry,Burberry Group,BRBY.L,,
+Q1 2019,2,Gucci,Kering,KER.PA,,
+Q1 2019,3,Balenciaga,Kering,KER.PA,,
+Q1 2019,6,Prada,Prada Group,1913.HK,,
+Q1 2019,8,Versace,Capri Holdings,CPRI,,
+Q1 2019,10,Saint Laurent,Kering,KER.PA,,
+Q1 2019,11,Nike,Nike Inc,NKE,,
+Q1 2019,12,Burberry,Burberry Group,BRBY.L,,
+Q1 2019,13,Moncler,Moncler,MONC.MI,,
+Q2 2019,1,Gucci,Kering,KER.PA,,
+Q2 2019,3,Balenciaga,Kering,KER.PA,,
+Q2 2019,5,Prada,Prada Group,1913.HK,,
+Q2 2019,6,Versace,Capri Holdings,CPRI,,
+Q2 2019,9,Nike,Nike Inc,NKE,,
+Q2 2019,10,Saint Laurent,Kering,KER.PA,,
+Q2 2019,12,Burberry,Burberry Group,BRBY.L,,
+Q2 2019,17,Moncler,Moncler,MONC.MI,,
+Q3 2019,2,Balenciaga,Kering,KER.PA,,
+Q3 2019,3,Gucci,Kering,KER.PA,,
+Q3 2019,4,Versace,Capri Holdings,CPRI,,
+Q3 2019,5,Prada,Prada Group,1913.HK,,
+Q3 2019,8,Burberry,Burberry Group,BRBY.L,,
+Q3 2019,9,Saint Laurent,Kering,KER.PA,,
+Q3 2019,11,Bottega Veneta,Kering,KER.PA,,
+Q3 2019,12,Moncler,Moncler,MONC.MI,,
+Q3 2019,20,Loewe,LVMH,MC.PA,,
+Q4 2019,2,Gucci,Kering,KER.PA,,
+Q4 2019,3,Balenciaga,Kering,KER.PA,,
+Q4 2019,4,Moncler,Moncler,MONC.MI,,
+Q4 2019,5,Versace,Capri Holdings,CPRI,,
+Q4 2019,7,Prada,Prada Group,1913.HK,,
+Q4 2019,9,Saint Laurent,Kering,KER.PA,,
+Q4 2019,10,Burberry,Burberry Group,BRBY.L,,
+Q4 2019,12,Nike,Nike Inc,NKE,,
+Q4 2019,14,Bottega Veneta,Kering,KER.PA,,
+Q4 2019,20,Loewe,LVMH,MC.PA,,
+Q1 2020,2,Balenciaga,Kering,KER.PA,,
+Q1 2020,3,Nike,Nike Inc,NKE,,
+Q1 2020,4,Gucci,Kering,KER.PA,,
+Q1 2020,5,Prada,Prada Group,1913.HK,,
+Q1 2020,6,Moncler,Moncler,MONC.MI,,
+Q1 2020,9,Saint Laurent,Kering,KER.PA,,
+Q1 2020,10,Versace,Capri Holdings,CPRI,,
+Q1 2020,11,Burberry,Burberry Group,BRBY.L,,
+Q1 2020,13,Bottega Veneta,Kering,KER.PA,,
+Q1 2020,17,Loewe,LVMH,MC.PA,,
+Q2 2020,1,Gucci,Kering,KER.PA,,
+Q2 2020,3,Nike,Nike Inc,NKE,,
+Q2 2020,4,Prada,Prada Group,1913.HK,,
+Q2 2020,5,Balenciaga,Kering,KER.PA,,
+Q2 2020,6,Moncler,Moncler,MONC.MI,,
+Q2 2020,9,Saint Laurent,Kering,KER.PA,,
+Q2 2020,10,Bottega Veneta,Kering,KER.PA,,
+Q2 2020,15,Burberry,Burberry Group,BRBY.L,,
+Q2 2020,16,Loewe,LVMH,MC.PA,,
+Q3 2020,1,Gucci,Kering,KER.PA,,
+Q3 2020,3,Nike,Nike Inc,NKE,,
+Q3 2020,4,Prada,Prada Group,1913.HK,,
+Q3 2020,5,Balenciaga,Kering,KER.PA,,
+Q3 2020,7,Versace,Capri Holdings,CPRI,,
+Q3 2020,8,Saint Laurent,Kering,KER.PA,,
+Q3 2020,9,Bottega Veneta,Kering,KER.PA,,
+Q3 2020,12,Burberry,Burberry Group,BRBY.L,,
+Q3 2020,13,Moncler,Moncler,MONC.MI,,
+Q3 2020,15,Loewe,LVMH,MC.PA,,
+Q4 2020,1,Gucci,Kering,KER.PA,,
+Q4 2020,2,Balenciaga,Kering,KER.PA,,
+Q4 2020,3,Moncler,Moncler,MONC.MI,,
+Q4 2020,5,Prada,Prada Group,1913.HK,,
+Q4 2020,6,Saint Laurent,Kering,KER.PA,,
+Q4 2020,7,Bottega Veneta,Kering,KER.PA,,
+Q4 2020,8,Versace,Capri Holdings,CPRI,,
+Q4 2020,11,Nike,Nike Inc,NKE,,
+Q4 2020,12,Burberry,Burberry Group,BRBY.L,,
+Q4 2020,15,Loewe,LVMH,MC.PA,,
+Q1 2021,1,Gucci,Kering,KER.PA,,
+Q1 2021,2,Nike,Nike Inc,NKE,,
+Q1 2021,4,Balenciaga,Kering,KER.PA,,
+Q1 2021,5,Moncler,Moncler,MONC.MI,,
+Q1 2021,6,Prada,Prada Group,1913.HK,,
+Q1 2021,7,Louis Vuitton,LVMH,MC.PA,,
+Q1 2021,8,Bottega Veneta,Kering,KER.PA,,
+Q1 2021,9,Saint Laurent,Kering,KER.PA,,
+Q1 2021,11,Versace,Capri Holdings,CPRI,,
+Q1 2021,12,Burberry,Burberry Group,BRBY.L,,
+Q1 2021,16,Loewe,LVMH,MC.PA,,
+Q2 2021,1,Gucci,Kering,KER.PA,,
+Q2 2021,3,Nike,Nike Inc,NKE,,
+Q2 2021,4,Louis Vuitton,LVMH,MC.PA,,
+Q2 2021,5,Prada,Prada Group,1913.HK,,
+Q2 2021,6,Balenciaga,Kering,KER.PA,,
+Q2 2021,7,Moncler,Moncler,MONC.MI,,
+Q2 2021,8,Bottega Veneta,Kering,KER.PA,,
+Q2 2021,9,Saint Laurent,Kering,KER.PA,,
+Q2 2021,10,Versace,Capri Holdings,CPRI,,
+Q2 2021,12,Burberry,Burberry Group,BRBY.L,,
+Q2 2021,16,Loewe,LVMH,MC.PA,,
+Q3 2021,1,Balenciaga,Kering,KER.PA,,
+Q3 2021,2,Gucci,Kering,KER.PA,,
+Q3 2021,4,Prada,Prada Group,1913.HK,,
+Q3 2021,5,Louis Vuitton,LVMH,MC.PA,,
+Q3 2021,6,Nike,Nike Inc,NKE,,
+Q3 2021,7,Bottega Veneta,Kering,KER.PA,,
+Q3 2021,8,Versace,Capri Holdings,CPRI,,
+Q3 2021,10,Saint Laurent,Kering,KER.PA,,
+Q3 2021,11,Moncler,Moncler,MONC.MI,,
+Q3 2021,12,Burberry,Burberry Group,BRBY.L,,
+Q3 2021,15,Loewe,LVMH,MC.PA,,
+Q4 2021,1,Balenciaga,Kering,KER.PA,,
+Q4 2021,2,Gucci,Kering,KER.PA,,
+Q4 2021,3,Prada,Prada Group,1913.HK,,
+Q4 2021,4,Louis Vuitton,LVMH,MC.PA,,
+Q4 2021,5,Moncler,Moncler,MONC.MI,,
+Q4 2021,8,Saint Laurent,Kering,KER.PA,,
+Q4 2021,9,Versace,Capri Holdings,CPRI,,
+Q4 2021,10,Bottega Veneta,Kering,KER.PA,,
+Q4 2021,12,Burberry,Burberry Group,BRBY.L,,
+Q4 2021,13,Nike,Nike Inc,NKE,,
+Q4 2021,14,Loewe,LVMH,MC.PA,,
+Q4 2021,20,Miu Miu,Prada Group,1913.HK,,
+Q1 2022,1,Balenciaga,Kering,KER.PA,,
+Q1 2022,2,Gucci,Kering,KER.PA,,
+Q1 2022,3,Louis Vuitton,LVMH,MC.PA,,
+Q1 2022,4,Prada,Prada Group,1913.HK,,
+Q1 2022,7,Moncler,Moncler,MONC.MI,,
+Q1 2022,8,Bottega Veneta,Kering,KER.PA,,
+Q1 2022,10,Miu Miu,Prada Group,1913.HK,,
+Q1 2022,12,Burberry,Burberry Group,BRBY.L,,
+Q1 2022,13,Loewe,LVMH,MC.PA,,
+Q1 2022,14,Versace,Capri Holdings,CPRI,,
+Q1 2022,18,Saint Laurent,Kering,KER.PA,,
+Q1 2022,19,Nike,Nike Inc,NKE,,
+Q2 2022,1,Gucci,Kering,KER.PA,,
+Q2 2022,2,Balenciaga,Kering,KER.PA,,
+Q2 2022,3,Prada,Prada Group,1913.HK,,
+Q2 2022,5,Louis Vuitton,LVMH,MC.PA,,
+Q2 2022,7,Miu Miu,Prada Group,1913.HK,,
+Q2 2022,10,Burberry,Burberry Group,BRBY.L,,
+Q2 2022,11,Versace,Capri Holdings,CPRI,,
+Q2 2022,12,Nike,Nike Inc,NKE,,
+Q2 2022,14,Loewe,LVMH,MC.PA,,
+Q2 2022,16,Saint Laurent,Kering,KER.PA,,
+Q2 2022,17,Bottega Veneta,Kering,KER.PA,,
+Q2 2022,18,Moncler,Moncler,MONC.MI,,
+Q3 2022,1,Gucci,Kering,KER.PA,,
+Q3 2022,2,Prada,Prada Group,1913.HK,,
+Q3 2022,4,Balenciaga,Kering,KER.PA,,
+Q3 2022,5,Miu Miu,Prada Group,1913.HK,,
+Q3 2022,9,Versace,Capri Holdings,CPRI,,
+Q3 2022,10,Burberry,Burberry Group,BRBY.L,,
+Q3 2022,11,Bottega Veneta,Kering,KER.PA,,
+Q3 2022,13,Saint Laurent,Kering,KER.PA,,
+Q3 2022,14,Nike,Nike Inc,NKE,,
+Q3 2022,15,Louis Vuitton,LVMH,MC.PA,,
+Q3 2022,16,Loewe,LVMH,MC.PA,,
+Q3 2022,17,Moncler,Moncler,MONC.MI,,
+Q4 2022,1,Prada,Prada Group,1913.HK,,
+Q4 2022,2,Gucci,Kering,KER.PA,,
+Q4 2022,3,Moncler,Moncler,MONC.MI,,
+Q4 2022,4,Miu Miu,Prada Group,1913.HK,,
+Q4 2022,6,Bottega Veneta,Kering,KER.PA,,
+Q4 2022,7,Loewe,LVMH,MC.PA,,
+Q4 2022,10,Saint Laurent,Kering,KER.PA,,
+Q4 2022,11,Balenciaga,Kering,KER.PA,,Ad controversy ↓7
+Q4 2022,12,Nike,Nike Inc,NKE,,
+Q4 2022,13,Versace,Capri Holdings,CPRI,,
+Q4 2022,15,Louis Vuitton,LVMH,MC.PA,,
+Q4 2022,18,Burberry,Burberry Group,BRBY.L,,
+Q4 2022,19,Coach,Tapestry,TPR,,
+Q1 2023,1,Prada,Prada Group,1913.HK,,
+Q1 2023,2,Miu Miu,Prada Group,1913.HK,,
+Q1 2023,3,Moncler,Moncler,MONC.MI,,
+Q1 2023,5,Loewe,LVMH,MC.PA,,
+Q1 2023,6,Bottega Veneta,Kering,KER.PA,,
+Q1 2023,8,Versace,Capri Holdings,CPRI,,
+Q1 2023,10,Gucci,Kering,KER.PA,,
+Q1 2023,11,Nike,Nike Inc,NKE,,
+Q1 2023,12,Louis Vuitton,LVMH,MC.PA,,
+Q1 2023,14,Burberry,Burberry Group,BRBY.L,,
+Q1 2023,17,Balenciaga,Kering,KER.PA,,
+Q1 2023,18,Saint Laurent,Kering,KER.PA,,
+Q2 2023,1,Loewe,LVMH,MC.PA,,
+Q2 2023,2,Prada,Prada Group,1913.HK,,
+Q2 2023,3,Versace,Capri Holdings,CPRI,,
+Q2 2023,4,Miu Miu,Prada Group,1913.HK,,
+Q2 2023,5,Bottega Veneta,Kering,KER.PA,,
+Q2 2023,7,Saint Laurent,Kering,KER.PA,,
+Q2 2023,8,Moncler,Moncler,MONC.MI,,
+Q2 2023,9,Gucci,Kering,KER.PA,,
+Q2 2023,11,Louis Vuitton,LVMH,MC.PA,,
+Q2 2023,13,Burberry,Burberry Group,BRBY.L,,
+Q2 2023,16,Balenciaga,Kering,KER.PA,,
+Q2 2023,18,Nike,Nike Inc,NKE,,
+Q3 2023,1,Miu Miu,Prada Group,1913.HK,,First time #1
+Q3 2023,2,Loewe,LVMH,MC.PA,,
+Q3 2023,3,Prada,Prada Group,1913.HK,,
+Q3 2023,4,Bottega Veneta,Kering,KER.PA,,
+Q3 2023,5,Versace,Capri Holdings,CPRI,,
+Q3 2023,6,Saint Laurent,Kering,KER.PA,,
+Q3 2023,7,Moncler,Moncler,MONC.MI,,
+Q3 2023,10,Burberry,Burberry Group,BRBY.L,,
+Q3 2023,11,Gucci,Kering,KER.PA,,
+Q3 2023,13,Balenciaga,Kering,KER.PA,,
+Q3 2023,15,Louis Vuitton,LVMH,MC.PA,,
+Q4 2023,1,Prada,Prada Group,1913.HK,,
+Q4 2023,2,Miu Miu,Prada Group,1913.HK,,
+Q4 2023,3,Loewe,LVMH,MC.PA,,
+Q4 2023,4,Bottega Veneta,Kering,KER.PA,,
+Q4 2023,5,Moncler,Moncler,MONC.MI,,
+Q4 2023,6,Saint Laurent,Kering,KER.PA,,
+Q4 2023,7,Versace,Capri Holdings,CPRI,,
+Q4 2023,9,Burberry,Burberry Group,BRBY.L,,
+Q4 2023,11,Gucci,Kering,KER.PA,,
+Q4 2023,12,Balenciaga,Kering,KER.PA,,
+Q4 2023,16,Louis Vuitton,LVMH,MC.PA,,
+Q1 2024,1,Miu Miu,Prada Group,1913.HK,,
+Q1 2024,2,Prada,Prada Group,1913.HK,,
+Q1 2024,3,Loewe,LVMH,MC.PA,,
+Q1 2024,4,Bottega Veneta,Kering,KER.PA,,
+Q1 2024,5,Saint Laurent,Kering,KER.PA,,
+Q1 2024,6,Moncler,Moncler,MONC.MI,,
+Q1 2024,7,Versace,Capri Holdings,CPRI,,
+Q1 2024,8,Balenciaga,Kering,KER.PA,,
+Q1 2024,11,Gucci,Kering,KER.PA,,
+Q1 2024,12,Burberry,Burberry Group,BRBY.L,,
+Q1 2024,14,Louis Vuitton,LVMH,MC.PA,,
+Q2 2024,1,Loewe,LVMH,MC.PA,,
+Q2 2024,2,Miu Miu,Prada Group,1913.HK,,
+Q2 2024,3,Prada,Prada Group,1913.HK,,
+Q2 2024,4,Saint Laurent,Kering,KER.PA,,
+Q2 2024,5,Bottega Veneta,Kering,KER.PA,,
+Q2 2024,6,Versace,Capri Holdings,CPRI,,
+Q2 2024,7,Balenciaga,Kering,KER.PA,,
+Q2 2024,9,Moncler,Moncler,MONC.MI,,
+Q2 2024,10,Gucci,Kering,KER.PA,,
+Q2 2024,13,Burberry,Burberry Group,BRBY.L,,
+Q2 2024,15,Louis Vuitton,LVMH,MC.PA,,
+Q2 2024,20,Coach,Tapestry,TPR,,
+Q3 2024,1,Miu Miu,Prada Group,1913.HK,,
+Q3 2024,2,Loewe,LVMH,MC.PA,,
+Q3 2024,3,Prada,Prada Group,1913.HK,,
+Q3 2024,4,Saint Laurent,Kering,KER.PA,,
+Q3 2024,6,Bottega Veneta,Kering,KER.PA,,
+Q3 2024,8,Gucci,Kering,KER.PA,,
+Q3 2024,11,Versace,Capri Holdings,CPRI,,
+Q3 2024,13,Moncler,Moncler,MONC.MI,,
+Q3 2024,14,Ralph Lauren,Ralph Lauren Corp,RL,,First entry
+Q3 2024,15,Coach,Tapestry,TPR,,
+Q3 2024,17,Balenciaga,Kering,KER.PA,,
+Q3 2024,18,Louis Vuitton,LVMH,MC.PA,,
+Q4 2024,1,Miu Miu,Prada Group,1913.HK,,
+Q4 2024,2,Saint Laurent,Kering,KER.PA,,
+Q4 2024,3,Prada,Prada Group,1913.HK,,
+Q4 2024,4,Loewe,LVMH,MC.PA,,
+Q4 2024,5,Coach,Tapestry,TPR,,+65% QoQ
+Q4 2024,6,Bottega Veneta,Kering,KER.PA,,
+Q4 2024,8,Moncler,Moncler,MONC.MI,,
+Q4 2024,12,Gucci,Kering,KER.PA,,
+Q4 2024,14,Versace,Capri Holdings,CPRI,,
+Q4 2024,15,Balenciaga,Kering,KER.PA,,
+Q4 2024,17,COS,H&M Group,HM-B.ST,,First entry
+Q4 2024,18,Ralph Lauren,Ralph Lauren Corp,RL,,
+Q1 2025,1,Loewe,LVMH,MC.PA,,
+Q1 2025,2,Miu Miu,Prada Group,1913.HK,,
+Q1 2025,3,Saint Laurent,Kering,KER.PA,,
+Q1 2025,4,Coach,Tapestry,TPR,,
+Q1 2025,5,Prada,Prada Group,1913.HK,,
+Q1 2025,6,COS,H&M Group,HM-B.ST,,+44% demand
+Q1 2025,7,Bottega Veneta,Kering,KER.PA,,
+Q1 2025,11,Moncler,Moncler,MONC.MI,,
+Q1 2025,12,Ralph Lauren,Ralph Lauren Corp,RL,,
+Q1 2025,13,Versace,Capri Holdings,CPRI,,
+Q1 2025,14,Balenciaga,Kering,KER.PA,,
+Q1 2025,17,Gucci,Kering,KER.PA,,
+Q2 2025,1,Miu Miu,Prada Group,1913.HK,,
+Q2 2025,2,Loewe,LVMH,MC.PA,,
+Q2 2025,3,Saint Laurent,Kering,KER.PA,,
+Q2 2025,4,Prada,Prada Group,1913.HK,,
+Q2 2025,5,Coach,Tapestry,TPR,,
+Q2 2025,7,COS,H&M Group,HM-B.ST,,
+Q2 2025,9,Bottega Veneta,Kering,KER.PA,,
+Q2 2025,10,Moncler,Moncler,MONC.MI,,
+Q2 2025,11,Ralph Lauren,Ralph Lauren Corp,RL,,
+Q2 2025,13,Balenciaga,Kering,KER.PA,,
+Q2 2025,16,Versace,Capri Holdings,CPRI,,
+Q2 2025,17,Burberry,Burberry Group,BRBY.L,,
+Q2 2025,18,Gucci,Kering,KER.PA,,
+Q3 2025,1,Saint Laurent,Kering,KER.PA,,First time #1
+Q3 2025,2,Miu Miu,Prada Group,1913.HK,,
+Q3 2025,3,COS,H&M Group,HM-B.ST,,+147% searches
+Q3 2025,5,Coach,Tapestry,TPR,,
+Q3 2025,6,Prada,Prada Group,1913.HK,,
+Q3 2025,7,Bottega Veneta,Kering,KER.PA,,
+Q3 2025,8,Loewe,LVMH,MC.PA,,
+Q3 2025,9,Ralph Lauren,Ralph Lauren Corp,RL,,
+Q3 2025,11,Moncler,Moncler,MONC.MI,,
+Q3 2025,12,Versace,Capri Holdings,CPRI,,
+Q3 2025,13,Burberry,Burberry Group,BRBY.L,,
+Q3 2025,14,Gucci,Kering,KER.PA,,
+Q3 2025,16,Balenciaga,Kering,KER.PA,,
+Q4 2025,1,Saint Laurent,Kering,KER.PA,,Retained #1
+Q4 2025,2,Miu Miu,Prada Group,1913.HK,,
+Q4 2025,3,COS,H&M Group,HM-B.ST,,+60% QoQ
+Q4 2025,4,Ralph Lauren,Ralph Lauren Corp,RL,,+24% demand
+Q4 2025,5,Prada,Prada Group,1913.HK,,
+Q4 2025,6,Coach,Tapestry,TPR,,
+Q4 2025,8,Burberry,Burberry Group,BRBY.L,,+38% demand
+Q4 2025,9,Gucci,Kering,KER.PA,,
+Q4 2025,10,Moncler,Moncler,MONC.MI,,
+Q4 2025,19,Nike,Nike Inc,NKE,,Re-entry
+Q1 2026,2,Saint Laurent,Kering,KER.PA,,
+Q1 2026,4,Miu Miu,Prada Group,1913.HK,,
+Q1 2026,5,Gucci,Kering,KER.PA,,+4 ranks
+Q1 2026,6,Ralph Lauren,Ralph Lauren Corp,RL,,
+Q1 2026,7,Prada,Prada Group,1913.HK,,
+Q1 2026,8,Coach,Tapestry,TPR,,
+Q1 2026,9,Burberry,Burberry Group,BRBY.L,,
+Q1 2026,10,COS,H&M Group,HM-B.ST,,
+Q1 2026,12,Versace,Capri Holdings,CPRI,,
+Q1 2026,13,Moncler,Moncler,MONC.MI,,
+Q1 2026,15,Bottega Veneta,Kering,KER.PA,,
+Q1 2026,16,Loewe,LVMH,MC.PA,,`;
+
+// Parse data
+const data = {};
+RAW_CSV.trim().split('\n').slice(1).forEach(line => {
+  const parts = line.split(',');
+  const quarter = parts[0], rank = parseInt(parts[1]), brand = parts[2], notes = parts.slice(6).join(',');
+  if (!BRANDS[brand]) return;
+  if (!data[brand]) data[brand] = {};
+  data[brand][quarter] = {rank, notes: notes || ''};
+});
+
+// Chart dimensions
+const margin = {top: 30, right: 120, bottom: 50, left: 20};
+const W = 1400;
+const H = 620;
+const cw = W - margin.left - margin.right;
+const ch = H - margin.top - margin.bottom;
+const svg = document.getElementById('chart');
+svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+
+// X scale (linear)
+function xScale(i) {
+  return margin.left + (i / (QUARTERS.length - 1)) * cw;
+}
+const yScale = rank => margin.top + ((rank - 1) / 19) * ch;
+
+// Draw grid
+let gridHtml = '';
+
+// Y-axis grid
+for (let r = 1; r <= 20; r++) {
+  const y = yScale(r);
+  gridHtml += `<g class="y-grid"><line x1="${margin.left}" y1="${y}" x2="${W - margin.right}" y2="${y}"/>`;
+  gridHtml += `<text x="${margin.left - 8}" y="${y + 4}" text-anchor="end">${r}</text></g>`;
+}
+
+// X-axis grid
+QUARTERS.forEach((q, i) => {
+  const x = xScale(i);
+  const isQ1 = q.startsWith('Q1');
+  gridHtml += `<g class="x-grid"><line x1="${x}" y1="${margin.top}" x2="${x}" y2="${H - margin.bottom}"/>`;
+  const label = q.replace(' 20','\'');
+  // Show fewer labels to avoid overlap (32 quarters)
+  const showLabel = QUARTERS.length <= 20 || isQ1 || q.startsWith('Q3');
+  if (showLabel) {
+    gridHtml += `<text x="${x}" y="${H - margin.bottom + 18}" text-anchor="middle" class="${isQ1 ? 'year-label' : ''}">${label}</text>`;
+  }
+  gridHtml += `</g>`;
+});
+
+svg.innerHTML = gridHtml;
+
+// Smooth curve through points (cardinal spline)
+function cardinalSpline(points, tension = 0.4) {
+  if (points.length < 2) return '';
+  if (points.length === 2) return `M${points[0].x},${points[0].y}L${points[1].x},${points[1].y}`;
+  let d = `M${points[0].x},${points[0].y}`;
+  for (let i = 0; i < points.length - 1; i++) {
+    const p0 = points[Math.max(0, i - 1)];
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    const p3 = points[Math.min(points.length - 1, i + 2)];
+    const cp1x = p1.x + (p2.x - p0.x) / 6 / tension;
+    const cp1y = p1.y + (p2.y - p0.y) / 6 / tension;
+    const cp2x = p2.x - (p3.x - p1.x) / 6 / tension;
+    const cp2y = p2.y - (p3.y - p1.y) / 6 / tension;
+    d += `C${cp1x},${cp1y},${cp2x},${cp2y},${p2.x},${p2.y}`;
+  }
+  return d;
+}
+
+// Draw brand lines
+const brandElements = {};
+const groups = {};
+
+Object.entries(BRANDS).forEach(([brand, cfg]) => {
+  if (!data[brand]) return;
+  const points = [];
+  const dotData = [];
+
+  QUARTERS.forEach((q, i) => {
+    if (data[brand][q]) {
+      const x = xScale(i);
+      const y = yScale(data[brand][q].rank);
+      points.push({x, y, q, rank: data[brand][q].rank, note: data[brand][q].notes});
+      dotData.push({x, y, q, rank: data[brand][q].rank, note: data[brand][q].notes, qi: i});
+    }
+  });
+
+  if (points.length < 2) return;
+
+  const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  g.setAttribute('data-brand', brand);
+  g.setAttribute('data-group', cfg.group);
+
+  // Split into segments — break if more than 2 quarters apart (brand absent)
+  const segments = [];
+  let currentSeg = [dotData[0]];
+  for (let i = 1; i < dotData.length; i++) {
+    const prevIdx = dotData[i-1].qi;
+    const currIdx = dotData[i].qi;
+    if (currIdx - prevIdx > 2) {
+      if (currentSeg.length >= 2) segments.push([...currentSeg]);
+      currentSeg = [dotData[i]];
+    } else {
+      currentSeg.push(dotData[i]);
+    }
+  }
+  if (currentSeg.length >= 2) segments.push(currentSeg);
+
+  segments.forEach(seg => {
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', cardinalSpline(seg));
+    path.setAttribute('class', 'brand-line');
+    path.style.stroke = cfg.color;
+    path.style.setProperty('--line-color', cfg.color);
+    path.setAttribute('data-brand', brand);
+    g.appendChild(path);
+  });
+
+  // Dots
+  dotData.forEach(d => {
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', d.x);
+    circle.setAttribute('cy', d.y);
+    circle.setAttribute('r', 3);
+    circle.setAttribute('fill', cfg.color);
+    circle.setAttribute('class', 'brand-dot');
+    circle.setAttribute('data-brand', brand);
+    circle.setAttribute('data-quarter', d.q);
+    circle.setAttribute('data-rank', d.rank);
+    circle.setAttribute('data-note', d.note);
+    g.appendChild(circle);
+  });
+
+  // End label
+  const lastPt = dotData[dotData.length - 1];
+  const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  label.setAttribute('x', lastPt.x + 10);
+  label.setAttribute('y', lastPt.y + 4);
+  label.setAttribute('fill', cfg.color);
+  label.setAttribute('class', 'brand-label');
+  label.setAttribute('data-brand', brand);
+  label.textContent = brand;
+  g.appendChild(label);
+
+  svg.appendChild(g);
+  brandElements[brand] = g;
+
+  if (!groups[cfg.group]) groups[cfg.group] = [];
+  groups[cfg.group].push(brand);
+});
+
+// Draw annotations
+const annGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+annGroup.setAttribute('class', 'annotations');
+
+ANNOTATIONS.forEach(ann => {
+  const qi = QUARTERS.indexOf(ann.quarter);
+  if (qi === -1) return;
+  const x = xScale(qi);
+  const y = yScale(ann.rank);
+  const ag = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+  ag.setAttribute('data-brand', ann.brand);
+
+  const diamond = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+  const s = 5;
+  diamond.setAttribute('points', `${x},${y-s} ${x+s},${y} ${x},${y+s} ${x-s},${y}`);
+  diamond.setAttribute('fill', 'none');
+  diamond.setAttribute('stroke', 'var(--gold)');
+  diamond.setAttribute('stroke-width', '1.2');
+  diamond.setAttribute('opacity', '0.7');
+  ag.appendChild(diamond);
+
+  const yOff = ann.rank <= 5 ? 22 : -22;
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  line.setAttribute('x1', x);
+  line.setAttribute('y1', y + (yOff > 0 ? s : -s));
+  line.setAttribute('x2', x);
+  line.setAttribute('y2', y + yOff);
+  line.setAttribute('stroke', 'var(--gold)');
+  line.setAttribute('stroke-width', '0.8');
+  line.setAttribute('stroke-dasharray', '2,2');
+  line.setAttribute('opacity', '0.5');
+  ag.appendChild(line);
+
+  const txt = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+  txt.setAttribute('x', x);
+  txt.setAttribute('y', y + yOff + (yOff > 0 ? 12 : -4));
+  txt.setAttribute('text-anchor', 'middle');
+  txt.setAttribute('fill', 'var(--gold)');
+  txt.setAttribute('font-size', '8');
+  txt.setAttribute('font-weight', '600');
+  txt.setAttribute('letter-spacing', '0.03em');
+  txt.setAttribute('opacity', '0.8');
+  txt.textContent = ann.text;
+  ag.appendChild(txt);
+
+  annGroup.appendChild(ag);
+});
+svg.appendChild(annGroup);
+
+// Tooltip
+const tooltip = document.getElementById('tooltip');
+svg.addEventListener('mousemove', e => {
+  const target = e.target.closest('.brand-dot');
+  if (target) {
+    const brand = target.getAttribute('data-brand');
+    const quarter = target.getAttribute('data-quarter');
+    const rank = target.getAttribute('data-rank');
+    const note = target.getAttribute('data-note');
+    const cfg = BRANDS[brand];
+    tooltip.querySelector('.tt-brand').textContent = brand;
+    tooltip.querySelector('.tt-brand').style.color = cfg.color;
+    tooltip.querySelector('.tt-rank').textContent = `#${rank}`;
+    tooltip.querySelector('.tt-quarter').textContent = quarter;
+    tooltip.querySelector('.tt-parent').textContent = `${cfg.group} · ${cfg.ticker}`;
+    tooltip.querySelector('.tt-note').textContent = note;
+    tooltip.querySelector('.tt-note').style.display = note ? 'block' : 'none';
+    tooltip.style.opacity = '1';
+    tooltip.style.left = (e.clientX + 14) + 'px';
+    tooltip.style.top = (e.clientY - 10) + 'px';
+  } else {
+    tooltip.style.opacity = '0';
+  }
+});
+
+// Click to isolate
+let isolatedBrand = null;
+svg.addEventListener('click', e => {
+  const target = e.target.closest('[data-brand]');
+  if (!target) { resetHighlight(); return; }
+  const brand = target.getAttribute('data-brand');
+  if (brand === isolatedBrand) { resetHighlight(); return; }
+  isolatedBrand = brand;
+  applyHighlight(brand);
+});
+
+function applyHighlight(brand) {
+  svg.querySelectorAll('.brand-line').forEach(el => {
+    el.classList.toggle('dimmed', el.getAttribute('data-brand') !== brand);
+    el.classList.toggle('highlighted', el.getAttribute('data-brand') === brand);
+  });
+  svg.querySelectorAll('.brand-dot').forEach(el => {
+    el.classList.toggle('dimmed', el.getAttribute('data-brand') !== brand);
+    el.classList.toggle('highlighted', el.getAttribute('data-brand') === brand);
+  });
+  svg.querySelectorAll('.brand-label').forEach(el => {
+    el.classList.toggle('dimmed', el.getAttribute('data-brand') !== brand);
+  });
+}
+
+function resetHighlight() {
+  isolatedBrand = null;
+  svg.querySelectorAll('.brand-line,.brand-dot,.brand-label').forEach(el => {
+    el.classList.remove('dimmed', 'highlighted');
+  });
+  applyGroupFilters();
+}
+
+// Group filter controls
+const groupColors = {
+  'Kering': 'var(--kering-1)',
+  'Prada Group': 'var(--prada-1)',
+  'LVMH': 'var(--lvmh-1)',
+  'Individual': 'var(--text2)',
+};
+
+const activeGroups = new Set(Object.keys(groups));
+const controlsEl = document.getElementById('controls');
+
+Object.keys(groups).forEach(group => {
+  const btn = document.createElement('button');
+  btn.className = 'group-btn active';
+  btn.style.setProperty('--btn-color', groupColors[group]);
+  btn.textContent = group;
+  btn.setAttribute('data-group', group);
+  btn.addEventListener('click', () => {
+    if (activeGroups.has(group)) { activeGroups.delete(group); btn.classList.remove('active'); }
+    else { activeGroups.add(group); btn.classList.add('active'); }
+    applyGroupFilters();
+  });
+  controlsEl.appendChild(btn);
+});
+
+const sep = document.createElement('div');
+sep.className = 'sep';
+controlsEl.appendChild(sep);
+
+const resetBtn = document.createElement('button');
+resetBtn.className = 'reset-btn';
+resetBtn.textContent = 'Reset All';
+resetBtn.addEventListener('click', () => {
+  activeGroups.clear();
+  Object.keys(groups).forEach(g => activeGroups.add(g));
+  document.querySelectorAll('.group-btn').forEach(b => b.classList.add('active'));
+  resetHighlight();
+});
+controlsEl.appendChild(resetBtn);
+
+function applyGroupFilters() {
+  Object.entries(brandElements).forEach(([brand, el]) => {
+    const cfg = BRANDS[brand];
+    el.style.display = activeGroups.has(cfg.group) ? '' : 'none';
+  });
+  annGroup.querySelectorAll('[data-brand]').forEach(el => {
+    const brand = el.getAttribute('data-brand');
+    const cfg = BRANDS[brand];
+    if (cfg) el.style.display = activeGroups.has(cfg.group) ? '' : 'none';
+  });
+}
+
+// Build legend
+const legendEl = document.getElementById('legend');
+const legendGroups = {
+  'Kering': [['Saint Laurent','var(--kering-1)','KER.PA'],['Gucci','var(--kering-2)','KER.PA'],['Bottega Veneta','var(--kering-3)','KER.PA'],['Balenciaga','var(--kering-4)','KER.PA']],
+  'Prada Group': [['Miu Miu','var(--prada-1)','1913.HK'],['Prada','var(--prada-2)','1913.HK']],
+  'LVMH': [['Louis Vuitton','var(--lvmh-1)','MC.PA'],['Loewe','var(--lvmh-2)','MC.PA']],
+  'Individual': [['Ralph Lauren','var(--rl)','RL'],['Burberry','var(--brby)','BRBY.L'],['Moncler','var(--monc)','MONC.MI'],['Coach','var(--tpr)','TPR'],['COS','var(--hm)','HM-B.ST'],['Versace','var(--cpri)','CPRI'],['Nike','var(--nke)','NKE']],
+};
+
+Object.entries(legendGroups).forEach(([group, brands]) => {
+  const div = document.createElement('div');
+  div.className = 'legend-group';
+  div.innerHTML = `<div class="lg-title">${group}</div>`;
+  brands.forEach(([name, color, ticker]) => {
+    const item = document.createElement('div');
+    item.className = 'legend-item';
+    item.innerHTML = `<div class="legend-swatch" style="background:${color}"></div><span class="legend-name">${name}</span><span class="legend-ticker">${ticker}</span>`;
+    item.addEventListener('click', () => {
+      if (isolatedBrand === name) { resetHighlight(); return; }
+      isolatedBrand = name;
+      applyHighlight(name);
+    });
+    div.appendChild(item);
+  });
+  legendEl.appendChild(div);
+});
+
+// ════════════════════════════════════════════
+// Backtest Visualizations
+// ════════════════════════════════════════════
+
+// S1 per-company correlation bars (v3.1 data, n=Q1 2018 → Q1 2026)
+const s1Companies = [
+  {name:'Ralph Lauren', ticker:'RL', r:0.929, p:0.007, color:'var(--rl)'},
+  {name:'Prada Group', ticker:'1913.HK', r:0.426, p:0.017, color:'var(--prada-1)'},
+  {name:'Moncler', ticker:'MONC.MI', r:0.258, p:0.169, color:'var(--monc)'},
+  {name:'Nike', ticker:'NKE', r:0.191, p:0.384, color:'var(--nke)'},
+  {name:'Tapestry', ticker:'TPR', r:0.049, p:0.898, color:'var(--tpr)'},
+  {name:'LVMH', ticker:'MC.PA', r:-0.167, p:0.537, color:'var(--lvmh-1)'},
+  {name:'Kering', ticker:'KER.PA', r:-0.160, p:0.389, color:'var(--kering-1)'},
+  {name:'Burberry', ticker:'BRBY.L', r:-0.252, p:0.205, color:'var(--brby)'},
+];
+
+const compGrid = document.getElementById('bt-companies');
+s1Companies.forEach(c => {
+  const barWidth = Math.abs(c.r) * 100;
+  const isPos = c.r >= 0;
+  const div = document.createElement('div');
+  div.className = 'bt-company';
+  div.innerHTML = `
+    <div class="bt-company-name" style="color:${c.color}">${c.name}</div>
+    <div class="bt-company-ticker">${c.ticker}</div>
+    <div class="bt-company-bar-wrap">
+      <div class="bt-company-bar ${isPos ? 'pos' : 'neg'}" style="width:${barWidth}%;${!isPos ? 'margin-left:auto' : ''}"></div>
+    </div>
+    <div class="bt-company-corr" style="color:${isPos ? '#3ab577' : '#e85d50'}">${c.r > 0 ? '+' : ''}${c.r.toFixed(3)}</div>
+    <div class="bt-company-p ${c.p < 0.05 ? 'sig' : ''}">${c.p < 0.05 ? '✓ ' : ''}p=${c.p.toFixed(3)}</div>
+  `;
+  compGrid.appendChild(div);
+});
+
+// S5 Cumulative L/S sparkline (v3.1 — 30 quarters, Q2'18 → Q4'25)
+const s5Data = [
+  {q:"Q2'18",ret:19.69},{q:"Q4'18",ret:9.89},
+  {q:"Q1'19",ret:-6.79},{q:"Q2'19",ret:12.06},
+  {q:"Q3'19",ret:-9.99},{q:"Q4'19",ret:22.46},
+  {q:"Q1'20",ret:0.63},{q:"Q2'20",ret:3.93},
+  {q:"Q3'20",ret:-24.87},{q:"Q4'20",ret:12.21},
+  {q:"Q1'21",ret:4.42},{q:"Q2'21",ret:-6.26},
+  {q:"Q3'21",ret:10.27},{q:"Q4'21",ret:3.85},
+  {q:"Q1'22",ret:10.96},{q:"Q2'22",ret:-10.93},
+  {q:"Q3'22",ret:-2.52},{q:"Q4'22",ret:-4.50},
+  {q:"Q1'23",ret:-8.39},{q:"Q2'23",ret:-15.08},
+  {q:"Q3'23",ret:-12.21},{q:"Q4'23",ret:10.10},
+  {q:"Q1'24",ret:20.07},{q:"Q2'24",ret:2.64},
+  {q:"Q3'24",ret:10.87},{q:"Q4'24",ret:15.43},
+  {q:"Q1'25",ret:1.73},{q:"Q2'25",ret:-25.72},
+  {q:"Q3'25",ret:-0.82},{q:"Q4'25",ret:-6.38},
+];
+
+const s5Svg = document.getElementById('s5-chart');
+const s5W = 1000, s5H = 220;
+const s5Margin = {top:20,right:40,bottom:30,left:50};
+const s5cw = s5W - s5Margin.left - s5Margin.right;
+const s5ch = s5H - s5Margin.top - s5Margin.bottom;
+
+// Compute cumulative
+let s5cum = [0];
+s5Data.forEach(d => { s5cum.push(s5cum[s5cum.length-1] + d.ret); });
+
+const s5Min = Math.min(...s5cum, 0);
+const s5Max = Math.max(...s5cum);
+const s5Range = Math.max(s5Max - s5Min, 20);
+const s5yScale = v => s5Margin.top + (1 - (v - s5Min + 5) / (s5Range + 10)) * s5ch;
+const s5xScale = i => s5Margin.left + (i / (s5cum.length - 1)) * s5cw;
+
+let s5Html = '';
+
+// Zero line
+const zeroY = s5yScale(0);
+s5Html += `<line x1="${s5Margin.left}" y1="${zeroY}" x2="${s5W-s5Margin.right}" y2="${zeroY}" stroke="rgba(255,255,255,0.1)" stroke-width="1" stroke-dasharray="4,4"/>`;
+s5Html += `<text x="${s5Margin.left-8}" y="${zeroY+4}" text-anchor="end" fill="var(--text3)" font-size="10" font-family="JetBrains Mono">0%</text>`;
+
+// Y-axis labels
+[50,100,150,200].forEach(v => {
+  if (v <= s5Max + 10) {
+    const y = s5yScale(v);
+    s5Html += `<line x1="${s5Margin.left}" y1="${y}" x2="${s5W-s5Margin.right}" y2="${y}" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>`;
+    s5Html += `<text x="${s5Margin.left-8}" y="${y+4}" text-anchor="end" fill="var(--text3)" font-size="10" font-family="JetBrains Mono">+${v}%</text>`;
+  }
+});
+[-10,-20].forEach(v => {
+  if (v >= s5Min - 5) {
+    const y = s5yScale(v);
+    s5Html += `<line x1="${s5Margin.left}" y1="${y}" x2="${s5W-s5Margin.right}" y2="${y}" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>`;
+    s5Html += `<text x="${s5Margin.left-8}" y="${y+4}" text-anchor="end" fill="var(--text3)" font-size="10" font-family="JetBrains Mono">${v}%</text>`;
+  }
+});
+
+// Area fill (continuous)
+const allPoints = s5cum.map((v, i) => ({x: s5xScale(i), y: s5yScale(v)}));
+s5Html += `<defs><linearGradient id="s5grad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3ab577" stop-opacity="0.15"/><stop offset="100%" stop-color="#3ab577" stop-opacity="0.02"/></linearGradient></defs>`;
+let areaPath = `M${allPoints[0].x},${zeroY}`;
+allPoints.forEach(p => { areaPath += `L${p.x},${p.y}`; });
+areaPath += `L${allPoints[allPoints.length-1].x},${zeroY}Z`;
+s5Html += `<path d="${areaPath}" fill="url(#s5grad)"/>`;
+
+// Line (continuous)
+let linePath = `M${allPoints[0].x},${allPoints[0].y}`;
+allPoints.slice(1).forEach(p => { linePath += `L${p.x},${p.y}`; });
+s5Html += `<path d="${linePath}" fill="none" stroke="#3ab577" stroke-width="2.5" stroke-linejoin="round"/>`;
+
+// Dots + quarterly bars
+s5cum.forEach((v, i) => {
+  const x = s5xScale(i);
+  const y = s5yScale(v);
+  if (i > 0) {
+    const ret = s5Data[i-1].ret;
+    const barColor = ret >= 0 ? 'rgba(58,181,119,0.5)' : 'rgba(232,93,80,0.5)';
+    const barH = Math.abs(ret) * 0.6;
+    s5Html += `<rect x="${x-8}" y="${s5H - s5Margin.bottom - barH}" width="16" height="${barH}" fill="${barColor}" rx="1" opacity="0.3"/>`;
+  }
+  s5Html += `<circle cx="${x}" cy="${y}" r="2.5" fill="#3ab577" stroke="var(--bg)" stroke-width="1.5"/>`;
+});
+
+// X-axis labels (every other)
+s5Data.forEach((d, i) => {
+  if (i % 3 === 0 || i === s5Data.length-1) {
+    s5Html += `<text x="${s5xScale(i+1)}" y="${s5H-5}" text-anchor="middle" fill="var(--text3)" font-size="8">${d.q}</text>`;
+  }
+});
+
+// End value label
+const lastS5Cum = s5cum[s5cum.length-1];
+s5Html += `<text x="${s5xScale(s5cum.length-1)+12}" y="${s5yScale(lastS5Cum)+4}" fill="#3ab577" font-size="13" font-weight="700" font-family="JetBrains Mono">+${lastS5Cum.toFixed(0)}%</text>`;
+
+s5Svg.innerHTML = s5Html;
+
+// Benchmark comparison bars (v3.1 — overall cumulative, USD, Q1 2018 → Q1 2026)
+const bmData = [
+  {name:'SPY', sub:'S&P 500', val:207.0, color:'#6c757d'},
+  {name:'GLUX', sub:'Luxury Index', val:62.3, color:'var(--gold)'},
+  {name:'EW', sub:'10-Stock Avg', val:70.9, color:'var(--prada-1)'},
+  {name:'S5 L/S', sub:'Rank Signal', val:19.7, color:'#3ab577'},
+];
+
+const bmMax = Math.max(...bmData.map(d=>d.val));
+const bmContainer = document.getElementById('bt-benchmarks');
+bmData.forEach(d => {
+  const col = document.createElement('div');
+  col.className = 'bt-bm-col';
+  const barH = Math.max(5, (d.val / bmMax) * 90);
+  col.innerHTML = `
+    <div class="bt-bm-bar" style="height:${barH}px;background:${d.color};opacity:0.7"></div>
+    <div class="bt-bm-label">${d.name}</div>
+    <div class="bt-bm-val" style="color:${d.color}">+${d.val}%</div>
+    <div style="font-size:0.5rem;color:var(--text3)">${d.sub}</div>
+  `;
+  bmContainer.appendChild(col);
+});
+</script>
+</body>
+</html>

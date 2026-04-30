@@ -1,0 +1,161 @@
+quarter,rank,brand,list_size,source_url,source_note,year,qtr,percentile_rank,source_status,brand_qtr_baseline,adj_heat,parent,ticker_local
+2018Q1,1,Balenciaga,10,https://www.refinery29.com/en-us/2018/04/197258/most-popular-fashion-2018,Refinery29: 'Top Brands & Products Of 2018 So Far: The Lyst Index Q1',2018,1,0.9,ok,0.8833333333333333,0.01666666666666672,Kering,KER FP
+2018Q1,2,Gucci,10,https://www.refinery29.com/en-us/2018/04/197258/most-popular-fashion-2018,Refinery29: 'Top Brands & Products Of 2018 So Far: The Lyst Index Q1',2018,1,0.8,ok,0.8333333333333334,-0.033333333333333326,Kering,KER FP
+2018Q1,3,Vetements,10,https://www.refinery29.com/en-us/2018/04/197258/most-popular-fashion-2018,Refinery29: 'Top Brands & Products Of 2018 So Far: The Lyst Index Q1',2018,1,0.7,ok,0.5,0.19999999999999996,Vetements Group (private),
+2018Q1,4,Off-White,10,https://www.refinery29.com/en-us/2018/04/197258/most-popular-fashion-2018,Refinery29: 'Top Brands & Products Of 2018 So Far: The Lyst Index Q1',2018,1,0.6,ok,0.8333333333333334,-0.2333333333333334,New Guards Group (private),
+2018Q1,5,Stone Island,10,https://www.refinery29.com/en-us/2018/04/197258/most-popular-fashion-2018,Refinery29: 'Top Brands & Products Of 2018 So Far: The Lyst Index Q1',2018,1,0.5,ok,0.5166666666666667,-0.01666666666666672,Moncler SpA (since 2021),MONC IM
+2018Q1,6,Givenchy,10,https://www.refinery29.com/en-us/2018/04/197258/most-popular-fashion-2018,Refinery29: 'Top Brands & Products Of 2018 So Far: The Lyst Index Q1',2018,1,0.4,ok,0.3333333333333333,0.06666666666666671,LVMH,MC FP
+2018Q1,7,Moncler,10,https://www.refinery29.com/en-us/2018/04/197258/most-popular-fashion-2018,Refinery29: 'Top Brands & Products Of 2018 So Far: The Lyst Index Q1',2018,1,0.30000000000000004,ok,0.45,-0.14999999999999997,Moncler SpA,MONC IM
+2018Q1,8,Dolce & Gabbana,10,https://www.refinery29.com/en-us/2018/04/197258/most-popular-fashion-2018,Refinery29: 'Top Brands & Products Of 2018 So Far: The Lyst Index Q1',2018,1,0.19999999999999996,ok,0.22499999999999998,-0.025000000000000022,,
+2018Q1,9,Yeezy,10,https://www.refinery29.com/en-us/2018/04/197258/most-popular-fashion-2018,Refinery29: 'Top Brands & Products Of 2018 So Far: The Lyst Index Q1',2018,1,0.09999999999999998,ok,0.14999999999999997,-0.04999999999999999,Adidas partnership historically,ADS GR
+2018Q1,10,Valentino,10,https://www.refinery29.com/en-us/2018/04/197258/most-popular-fashion-2018,Refinery29: 'Top Brands & Products Of 2018 So Far: The Lyst Index Q1',2018,1,0.0,ok,0.4666666666666666,-0.4666666666666666,Mayhoola (private),
+2018Q2,1,Gucci,10,https://www.vogue.co.uk/article/top-10-fashion-brands-2018,"Vogue UK: 'According To The Lyst Index, These Are The World's 10 Hottest Brands' (Q2 2018)",2018,2,0.9,ok,0.9333333333333332,-0.033333333333333215,Kering,KER FP
+2018Q2,2,Off-White,10,https://www.vogue.co.uk/article/top-10-fashion-brands-2018,"Vogue UK: 'According To The Lyst Index, These Are The World's 10 Hottest Brands' (Q2 2018)",2018,2,0.8,ok,0.8666666666666667,-0.06666666666666665,New Guards Group (private),
+2018Q2,3,Balenciaga,10,https://www.vogue.co.uk/article/top-10-fashion-brands-2018,"Vogue UK: 'According To The Lyst Index, These Are The World's 10 Hottest Brands' (Q2 2018)",2018,2,0.7,ok,0.7666666666666666,-0.06666666666666665,Kering,KER FP
+2018Q2,4,Givenchy,10,https://www.vogue.co.uk/article/top-10-fashion-brands-2018,"Vogue UK: 'According To The Lyst Index, These Are The World's 10 Hottest Brands' (Q2 2018)",2018,2,0.6,ok,0.45,0.14999999999999997,LVMH,MC FP
+2018Q2,5,Dolce & Gabbana,10,https://www.vogue.co.uk/article/top-10-fashion-brands-2018,"Vogue UK: 'According To The Lyst Index, These Are The World's 10 Hottest Brands' (Q2 2018)",2018,2,0.5,ok,0.425,0.07500000000000001,,
+2018Q2,6,Vetements,10,https://www.vogue.co.uk/article/top-10-fashion-brands-2018,"Vogue UK: 'According To The Lyst Index, These Are The World's 10 Hottest Brands' (Q2 2018)",2018,2,0.4,ok,0.425,-0.024999999999999967,Vetements Group (private),
+2018Q2,7,Versace,10,https://www.vogue.co.uk/article/top-10-fashion-brands-2018,"Vogue UK: 'According To The Lyst Index, These Are The World's 10 Hottest Brands' (Q2 2018)",2018,2,0.30000000000000004,ok,0.5,-0.19999999999999996,Capri Holdings,CPRI US
+2018Q2,8,Fendi,10,https://www.vogue.co.uk/article/top-10-fashion-brands-2018,"Vogue UK: 'According To The Lyst Index, These Are The World's 10 Hottest Brands' (Q2 2018)",2018,2,0.19999999999999996,ok,0.5,-0.30000000000000004,LVMH,MC FP
+2018Q2,9,Nike,10,https://www.vogue.co.uk/article/top-10-fashion-brands-2018,"Vogue UK: 'According To The Lyst Index, These Are The World's 10 Hottest Brands' (Q2 2018)",2018,2,0.09999999999999998,ok,0.5,-0.4,"Nike, Inc.",NKE US
+2018Q2,10,Prada,10,https://www.vogue.co.uk/article/top-10-fashion-brands-2018,"Vogue UK: 'According To The Lyst Index, These Are The World's 10 Hottest Brands' (Q2 2018)",2018,2,0.0,ok,0.5166666666666667,-0.5166666666666667,Prada Group,1913 HK
+2018Q3,1,Off-White,10,https://www.lyst.com/the-lyst-index/2018/q3/,Official Lyst page: Q3 2018 (Top-10),2018,3,0.9,ok,0.925,-0.025000000000000022,New Guards Group (private),
+2018Q3,2,Gucci,10,https://www.lyst.com/the-lyst-index/2018/q3/,Official Lyst page: Q3 2018 (Top-10),2018,3,0.8,ok,0.825,-0.02499999999999991,Kering,KER FP
+2018Q3,3,Balenciaga,10,https://www.lyst.com/the-lyst-index/2018/q3/,Official Lyst page: Q3 2018 (Top-10),2018,3,0.7,ok,0.8,-0.10000000000000009,Kering,KER FP
+2018Q3,4,Nike,10,https://www.lyst.com/the-lyst-index/2018/q3/,Official Lyst page: Q3 2018 (Top-10),2018,3,0.6,ok,0.6,0.0,"Nike, Inc.",NKE US
+2018Q3,5,Prada,10,https://www.lyst.com/the-lyst-index/2018/q3/,Official Lyst page: Q3 2018 (Top-10),2018,3,0.5,ok,0.625,-0.125,Prada Group,1913 HK
+2018Q3,6,Versace,10,https://www.lyst.com/the-lyst-index/2018/q3/,Official Lyst page: Q3 2018 (Top-10),2018,3,0.4,ok,0.6000000000000001,-0.20000000000000007,Capri Holdings,CPRI US
+2018Q3,7,Yeezy,10,https://www.lyst.com/the-lyst-index/2018/q3/,Official Lyst page: Q3 2018 (Top-10),2018,3,0.30000000000000004,ok,0.30000000000000004,0.0,Adidas partnership historically,ADS GR
+2018Q3,8,Vetements,10,https://www.lyst.com/the-lyst-index/2018/q3/,Official Lyst page: Q3 2018 (Top-10),2018,3,0.19999999999999996,ok,0.35,-0.15000000000000002,Vetements Group (private),
+2018Q3,9,Fendi,10,https://www.lyst.com/the-lyst-index/2018/q3/,Official Lyst page: Q3 2018 (Top-10),2018,3,0.09999999999999998,ok,0.375,-0.275,LVMH,MC FP
+2018Q3,10,Valentino,10,https://www.lyst.com/the-lyst-index/2018/q3/,Official Lyst page: Q3 2018 (Top-10),2018,3,0.0,ok,0.35,-0.35,Mayhoola (private),
+2018Q4,1,Gucci,10,https://www.lyst.com/the-lyst-index/2018/q4/,Official Lyst page: Q4 2018 (Top-10),2018,4,0.9,ok,0.9,0.0,Kering,KER FP
+2018Q4,2,Off-White,10,https://www.lyst.com/the-lyst-index/2018/q4/,Official Lyst page: Q4 2018 (Top-10),2018,4,0.8,ok,0.875,-0.07499999999999996,New Guards Group (private),
+2018Q4,3,Balenciaga,10,https://www.lyst.com/the-lyst-index/2018/q4/,Official Lyst page: Q4 2018 (Top-10),2018,4,0.7,ok,0.7749999999999999,-0.07499999999999996,Kering,KER FP
+2018Q4,4,Moncler,10,https://www.lyst.com/the-lyst-index/2018/q4/,Official Lyst page: Q4 2018 (Top-10),2018,4,0.6,ok,0.7,-0.09999999999999998,Moncler SpA,MONC IM
+2018Q4,5,Fendi,10,https://www.lyst.com/the-lyst-index/2018/q4/,Official Lyst page: Q4 2018 (Top-10),2018,4,0.5,ok,0.6,-0.09999999999999998,LVMH,MC FP
+2018Q4,6,Versace,10,https://www.lyst.com/the-lyst-index/2018/q4/,Official Lyst page: Q4 2018 (Top-10),2018,4,0.4,ok,0.575,-0.17499999999999993,Capri Holdings,CPRI US
+2018Q4,7,Stone Island,10,https://www.lyst.com/the-lyst-index/2018/q4/,Official Lyst page: Q4 2018 (Top-10),2018,4,0.30000000000000004,ok,0.375,-0.07499999999999996,Moncler SpA (since 2021),MONC IM
+2018Q4,8,Vetements,10,https://www.lyst.com/the-lyst-index/2018/q4/,Official Lyst page: Q4 2018 (Top-10),2018,4,0.19999999999999996,ok,0.22499999999999998,-0.025000000000000022,Vetements Group (private),
+2018Q4,9,Valentino,10,https://www.lyst.com/the-lyst-index/2018/q4/,Official Lyst page: Q4 2018 (Top-10),2018,4,0.09999999999999998,ok,0.35,-0.25,Mayhoola (private),
+2018Q4,10,Burberry,10,https://www.lyst.com/the-lyst-index/2018/q4/,Official Lyst page: Q4 2018 (Top-10),2018,4,0.0,ok,0.25,-0.25,Burberry Group,BRBY LN
+2019Q1,1,Off-White,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.95,ok,0.8333333333333334,0.11666666666666659,New Guards Group (private),
+2019Q1,2,Gucci,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.9,ok,0.8333333333333334,0.06666666666666665,Kering,KER FP
+2019Q1,3,Balenciaga,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.85,ok,0.8833333333333333,-0.033333333333333326,Kering,KER FP
+2019Q1,4,Valentino,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.8,ok,0.4666666666666666,0.3333333333333334,Mayhoola (private),
+2019Q1,5,Fendi,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.75,ok,0.7,0.050000000000000044,LVMH,MC FP
+2019Q1,6,Prada,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.7,ok,0.725,-0.025000000000000022,Prada Group,1913 HK
+2019Q1,7,Stone Island,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.65,ok,0.5166666666666667,0.1333333333333333,Moncler SpA (since 2021),MONC IM
+2019Q1,8,Versace,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.6,ok,0.55,0.04999999999999993,Capri Holdings,CPRI US
+2019Q1,9,Vetements,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.55,ok,0.5,0.050000000000000044,Vetements Group (private),
+2019Q1,10,Saint Laurent,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.5,ok,0.525,-0.025000000000000022,Kering,KER FP
+2019Q1,11,Nike,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.44999999999999996,ok,0.6499999999999999,-0.19999999999999996,"Nike, Inc.",NKE US
+2019Q1,12,Burberry,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.4,ok,0.425,-0.024999999999999967,Burberry Group,BRBY LN
+2019Q1,13,Moncler,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.35,ok,0.45,-0.10000000000000003,Moncler SpA,MONC IM
+2019Q1,14,Givenchy,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.30000000000000004,ok,0.3333333333333333,-0.03333333333333327,LVMH,MC FP
+2019Q1,15,Dolce & Gabbana,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.25,ok,0.22499999999999998,0.025000000000000022,,
+2019Q1,16,Yeezy,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.19999999999999996,ok,0.14999999999999997,0.04999999999999999,Adidas partnership historically,ADS GR
+2019Q1,17,Balmain,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.15000000000000002,ok,0.15000000000000002,0.0,,
+2019Q1,18,Palm Angels,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.09999999999999998,ok,0.09999999999999998,0.0,New Guards Group (private),
+2019Q1,19,Adidas,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.050000000000000044,ok,0.050000000000000044,0.0,Adidas AG,ADS GR
+2019Q1,20,Alexander McQueen,20,https://www.refinery29.com/en-gb/2019/05/232197/lyst-2019-index,Refinery29: 'Top Brands & Products Of 2019 So Far: The Lyst Index Q1',2019,1,0.0,ok,0.0,0.0,Kering,KER FP
+2019Q2,1,Gucci,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.95,ok,0.9333333333333332,0.01666666666666672,Kering,KER FP
+2019Q2,2,Off-White,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.9,ok,0.8666666666666667,0.033333333333333326,New Guards Group (private),
+2019Q2,3,Balenciaga,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.85,ok,0.7666666666666666,0.08333333333333337,Kering,KER FP
+2019Q2,4,Valentino,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.8,ok,0.7,0.10000000000000009,Mayhoola (private),
+2019Q2,5,Prada,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.75,ok,0.5166666666666667,0.23333333333333328,Prada Group,1913 HK
+2019Q2,6,Versace,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.7,ok,0.5,0.19999999999999996,Capri Holdings,CPRI US
+2019Q2,7,Fendi,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.65,ok,0.5,0.15000000000000002,LVMH,MC FP
+2019Q2,8,Stone Island,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.6,ok,0.5,0.09999999999999998,Moncler SpA (since 2021),MONC IM
+2019Q2,9,Nike,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.55,ok,0.5,0.050000000000000044,"Nike, Inc.",NKE US
+2019Q2,10,Saint Laurent,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.5,ok,0.525,-0.025000000000000022,Kering,KER FP
+2019Q2,11,Vetements,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.44999999999999996,ok,0.425,0.024999999999999967,Vetements Group (private),
+2019Q2,12,Burberry,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.4,ok,0.325,0.07500000000000001,Burberry Group,BRBY LN
+2019Q2,13,Dolce & Gabbana,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.35,ok,0.425,-0.07500000000000001,,
+2019Q2,14,Givenchy,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.30000000000000004,ok,0.45,-0.14999999999999997,LVMH,MC FP
+2019Q2,15,Palm Angels,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.25,ok,0.25,0.0,New Guards Group (private),
+2019Q2,16,Adidas,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.19999999999999996,ok,0.19999999999999996,0.0,Adidas AG,ADS GR
+2019Q2,17,Moncler,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.15000000000000002,ok,0.425,-0.27499999999999997,Moncler SpA,MONC IM
+2019Q2,18,Moschino,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.09999999999999998,ok,0.09999999999999998,0.0,,
+2019Q2,19,Yeezy,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.050000000000000044,ok,0.050000000000000044,0.0,Adidas partnership historically,ADS GR
+2019Q2,20,Balmain,20,https://www.refinery29.com/en-gb/lyst-index-q2-2019,Refinery29: 'Two Of 2019's Official Hottest Fashion Pieces Are Under £55' (includes full Top-20),2019,2,0.0,ok,0.0,0.0,,
+2019Q3,1,Off-White,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.95,ok,0.925,0.02499999999999991,New Guards Group (private),
+2019Q3,2,Balenciaga,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.9,ok,0.8,0.09999999999999998,Kering,KER FP
+2019Q3,3,Gucci,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.85,ok,0.825,0.025000000000000022,Kering,KER FP
+2019Q3,4,Versace,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.8,ok,0.6000000000000001,0.19999999999999996,Capri Holdings,CPRI US
+2019Q3,5,Prada,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.75,ok,0.625,0.125,Prada Group,1913 HK
+2019Q3,6,Valentino,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.7,ok,0.35,0.35,Mayhoola (private),
+2019Q3,7,Fendi,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.65,ok,0.375,0.275,LVMH,MC FP
+2019Q3,8,Burberry,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.6,ok,0.6,0.0,Burberry Group,BRBY LN
+2019Q3,9,Saint Laurent,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.55,ok,0.55,0.0,Kering,KER FP
+2019Q3,10,Vetements,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.5,ok,0.35,0.15000000000000002,Vetements Group (private),
+2019Q3,11,Bottega Veneta,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.44999999999999996,ok,0.44999999999999996,0.0,Kering,KER FP
+2019Q3,12,Moncler,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.4,ok,0.4,0.0,Moncler SpA,MONC IM
+2019Q3,13,Stone Island,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.35,ok,0.35,0.0,Moncler SpA (since 2021),MONC IM
+2019Q3,14,Alexander McQueen,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.30000000000000004,ok,0.30000000000000004,0.0,Kering,KER FP
+2019Q3,15,Givenchy,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.25,ok,0.25,0.0,LVMH,MC FP
+2019Q3,16,Bottega Veneta?,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.19999999999999996,to-verify,0.19999999999999996,0.0,,
+2019Q3,17,Yeezy?,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.15000000000000002,to-verify,0.15000000000000002,0.0,,
+2019Q3,18,Moschino,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.09999999999999998,ok,0.09999999999999998,0.0,,
+2019Q3,19,Balmain,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.050000000000000044,ok,0.050000000000000044,0.0,,
+2019Q3,20,Loewe,20,https://www.lyst.com/data/the-lyst-index/q319/,Official Lyst page Q3 2019 + press recaps (to-verify entries flagged),2019,3,0.0,ok,0.0,0.0,LVMH,MC FP
+2019Q4,1,Off-White,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.95,ok,0.875,0.07499999999999996,New Guards Group (private),
+2019Q4,2,Gucci,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.9,ok,0.9,0.0,Kering,KER FP
+2019Q4,3,Balenciaga,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.85,ok,0.7749999999999999,0.07500000000000007,Kering,KER FP
+2019Q4,4,Moncler,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.8,ok,0.7,0.10000000000000009,Moncler SpA,MONC IM
+2019Q4,5,Versace,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.75,ok,0.575,0.17500000000000004,Capri Holdings,CPRI US
+2019Q4,6,Fendi,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.7,ok,0.6,0.09999999999999998,LVMH,MC FP
+2019Q4,7,Prada,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.65,ok,0.65,0.0,Prada Group,1913 HK
+2019Q4,8,Valentino,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.6,ok,0.35,0.25,Mayhoola (private),
+2019Q4,9,Saint Laurent,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.55,ok,0.55,0.0,Kering,KER FP
+2019Q4,10,Burberry,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.5,ok,0.25,0.25,Burberry Group,BRBY LN
+2019Q4,11,Stone Island,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.44999999999999996,ok,0.375,0.07499999999999996,Moncler SpA (since 2021),MONC IM
+2019Q4,12,Nike,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.4,ok,0.4,0.0,"Nike, Inc.",NKE US
+2019Q4,13,Givenchy,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.35,ok,0.35,0.0,LVMH,MC FP
+2019Q4,14,Bottega Veneta,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.30000000000000004,ok,0.30000000000000004,0.0,Kering,KER FP
+2019Q4,15,Vetements,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.25,ok,0.22499999999999998,0.025000000000000022,Vetements Group (private),
+2019Q4,16,Yeezy,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.19999999999999996,ok,0.19999999999999996,0.0,Adidas partnership historically,ADS GR
+2019Q4,17,Acne Studios,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.15000000000000002,ok,0.15000000000000002,0.0,,
+2019Q4,18,Canada Goose,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.09999999999999998,ok,0.09999999999999998,0.0,,
+2019Q4,19,Dr Martens,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.050000000000000044,ok,0.050000000000000044,0.0,Dr. Martens plc,DOCS LN
+2019Q4,20,Loewe,20,https://www.lyst.com/data/the-lyst-index/q419/,Official Lyst page: Q4 2019 (Top-20),2019,4,0.0,ok,0.0,0.0,LVMH,MC FP
+2020Q1,1,Off-White,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.95,ok,0.8333333333333334,0.11666666666666659,New Guards Group (private),
+2020Q1,2,Balenciaga,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.9,ok,0.8833333333333333,0.01666666666666672,Kering,KER FP
+2020Q1,3,Nike,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.85,ok,0.6499999999999999,0.20000000000000007,"Nike, Inc.",NKE US
+2020Q1,4,Gucci,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.8,ok,0.8333333333333334,-0.033333333333333326,Kering,KER FP
+2020Q1,5,Prada,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.75,ok,0.725,0.025000000000000022,Prada Group,1913 HK
+2020Q1,6,Moncler,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.7,ok,0.45,0.24999999999999994,Moncler SpA,MONC IM
+2020Q1,7,Fendi,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.65,ok,0.7,-0.04999999999999993,LVMH,MC FP
+2020Q1,8,Valentino,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.6,ok,0.4666666666666666,0.13333333333333336,Mayhoola (private),
+2020Q1,9,Saint Laurent,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.55,ok,0.525,0.025000000000000022,Kering,KER FP
+2020Q1,10,Versace,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.5,ok,0.55,-0.050000000000000044,Capri Holdings,CPRI US
+2020Q1,11,Burberry,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.44999999999999996,ok,0.425,0.024999999999999967,Burberry Group,BRBY LN
+2020Q1,12,Stone Island,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.4,ok,0.5166666666666667,-0.1166666666666667,Moncler SpA (since 2021),MONC IM
+2020Q1,13,Bottega Veneta,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.35,ok,0.35,0.0,Kering,KER FP
+2020Q1,14,Givenchy,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.30000000000000004,ok,0.3333333333333333,-0.03333333333333327,LVMH,MC FP
+2020Q1,15,Vetements,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.25,ok,0.5,-0.25,Vetements Group (private),
+2020Q1,16,Raf Simons,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.19999999999999996,ok,0.19999999999999996,0.0,,
+2020Q1,17,Loewe,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.15000000000000002,ok,0.15000000000000002,0.0,LVMH,MC FP
+2020Q1,18,Thom Browne,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.09999999999999998,ok,0.09999999999999998,0.0,,
+2020Q1,19,Rick Owens,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.050000000000000044,ok,0.050000000000000044,0.0,,
+2020Q1,20,Jacquemus,20,https://www.lyst.com/data/the-lyst-index/q120/,Official Lyst page: Q1 2020 (Top-20),2020,1,0.0,ok,0.0,0.0,Jacquemus (private),
+2020Q2,1,Gucci,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.95,ok,0.9333333333333332,0.01666666666666672,Kering,KER FP
+2020Q2,2,Off-White,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.9,ok,0.8666666666666667,0.033333333333333326,New Guards Group (private),
+2020Q2,3,Nike,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.85,ok,0.5,0.35,"Nike, Inc.",NKE US
+2020Q2,4,Prada,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.8,ok,0.5166666666666667,0.2833333333333333,Prada Group,1913 HK
+2020Q2,5,Balenciaga,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.75,ok,0.7666666666666666,-0.016666666666666607,Kering,KER FP
+2020Q2,6,Moncler,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.7,ok,0.425,0.27499999999999997,Moncler SpA,MONC IM
+2020Q2,7,Fendi,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.65,ok,0.5,0.15000000000000002,LVMH,MC FP
+2020Q2,8,Valentino,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.6,ok,0.7,-0.09999999999999998,Mayhoola (private),
+2020Q2,9,Saint Laurent,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.55,ok,0.525,0.025000000000000022,Kering,KER FP
+2020Q2,10,Bottega Veneta,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.5,ok,0.5,0.0,Kering,KER FP
+2020Q2,11,Givenchy,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.44999999999999996,ok,0.45,-5.551115123125783e-17,LVMH,MC FP
+2020Q2,12,Stone Island,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.4,ok,0.5,-0.09999999999999998,Moncler SpA (since 2021),MONC IM
+2020Q2,13,Jacquemus,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.35,ok,0.35,0.0,Jacquemus (private),
+2020Q2,14,Raf Simons,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.30000000000000004,ok,0.30000000000000004,0.0,,
+2020Q2,15,Burberry,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.25,ok,0.325,-0.07500000000000001,Burberry Group,BRBY LN
+2020Q2,16,Loewe,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.19999999999999996,ok,0.19999999999999996,0.0,LVMH,MC FP
+2020Q2,17,Rick Owens,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.15000000000000002,ok,0.15000000000000002,0.0,,
+2020Q2,18,Thom Browne,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.09999999999999998,ok,0.09999999999999998,0.0,,
+2020Q2,19,Fear of God?,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.050000000000000044,to-verify,0.050000000000000044,0.0,,
+2020Q2,20,Marine Serre?,20,https://www.lyst.com/data/the-lyst-index/q220/,"Official Lyst page: Q2 2020 (Top-20, two tail entries to verify)",2020,2,0.0,to-verify,0.0,0.0,,
