@@ -114,7 +114,7 @@ h1 span{{color:var(--gold)}}
 .section-title{{font-size:1.3rem;font-weight:600;margin-bottom:16px;padding-left:4px}}
 .section-title span{{color:var(--gold);font-family:'JetBrains Mono',monospace;font-size:0.9rem;margin-right:8px}}
 
-.chart-wrapper{{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;overflow:hidden}}
+.chart-wrapper{{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:20px 24px;overflow:visible}}
 .chart-wrapper svg{{width:100%;height:auto;display:block}}
 .y-label{{position:absolute;left:6px;top:50%;transform:rotate(-90deg) translateX(-50%);font-size:0.75rem;color:var(--text-dim);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;transform-origin:center center}}
 
@@ -247,7 +247,7 @@ function updateBtns() {{
 
 // ────── Main Chart ──────
 const SVG_W = 1400, SVG_H = 520;
-const PAD = {{ left: 60, right: 30, top: 30, bottom: 50 }};
+const PAD = {{ left: 60, right: 55, top: 30, bottom: 50 }};
 const PLOT_W = SVG_W - PAD.left - PAD.right;
 const PLOT_H = SVG_H - PAD.top - PAD.bottom;
 
