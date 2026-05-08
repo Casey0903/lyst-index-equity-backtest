@@ -247,7 +247,7 @@ function updateBtns() {{
 
 // ────── Main Chart ──────
 const SVG_W = 1400, SVG_H = 520;
-const PAD = {{ left: 60, right: 140, top: 30, bottom: 50 }};
+const PAD = {{ left: 60, right: 30, top: 30, bottom: 50 }};
 const PLOT_W = SVG_W - PAD.left - PAD.right;
 const PLOT_H = SVG_H - PAD.top - PAD.bottom;
 
@@ -362,72 +362,6 @@ function buildChart() {{
       }});
       svg.appendChild(dot);
     }});
-
-    // End-of-line label
-    if (points.length > 0) {{
-      const last = points[points.length - 1];
-      const label = document.createElementNS(ns, 'text');
-      label.setAttribute('x', last.x + 10);
-      label.setAttribute('y', last.y + 4);
-      label.setAttribute('fill', CO_HEX[co]);
-      label.setAttribute('font-size', '12');
-      label.setAttribute('font-weight', '600');
-      label.setAttribute('font-family', 'DM Sans, sans-serif');
-      label.setAttribute('data-co', co);
-      label.setAttribute('class', 'co-label-end');
-      label.style.transition = 'opacity 0.3s';
-      label.textContent = co;
-      svg.appendChild(label);
-    }}
-  }});
-
-  // ────── Event Annotations ──────
-  const EVENTS = [
-    {{ q: 'Q4 2020', score: 'Kering', label: 'Gucci peak', align: 'above' }},
-    {{ q: 'Q4 2022', score: 'Kering', label: 'Balenciaga scandal', align: 'below' }},
-    {{ q: 'Q2 2024', score: 'Tapestry', label: 'Coach re-entry', align: 'above' }},
-    {{ q: 'Q3 2024', score: 'Ralph Lauren', label: 'RL debut', align: 'above' }},
-    {{ q: 'Q3 2024', score: 'Burberry', label: 'Burberry negative', align: 'below' }},
-    {{ q: 'Q1 2025', score: 'Kering', label: 'Kering trough', align: 'below' }},
-    {{ q: 'Q4 2025', score: 'Ralph Lauren', label: 'RL peak 0.815', align: 'above' }},
-  ];
-  EVENTS.forEach(ev => {{
-    const qi = quarters.indexOf(ev.q);
-    if (qi < 0) return;
-    const s = DATA.companies[ev.score].scores[ev.q];
-    if (s === undefined) return;
-    const x = xScale(qi), y = yScale(s);
-    const above = ev.align === 'above';
-
-    // Diamond marker
-    const diamond = document.createElementNS(ns, 'polygon');
-    const d = 5;
-    diamond.setAttribute('points', x+','+( y-d)+' '+(x+d)+','+y+' '+x+','+(y+d)+' '+(x-d)+','+y);
-    diamond.setAttribute('fill', '#c9a96e');
-    diamond.setAttribute('stroke', '#0a0a0f');
-    diamond.setAttribute('stroke-width', '1');
-    diamond.setAttribute('class', 'evt-marker');
-    svg.appendChild(diamond);
-
-    // Annotation line
-    const lineY = above ? y - 8 : y + 8;
-    const textY = above ? y - 14 : y + 20;
-    const aLine = document.createElementNS(ns, 'line');
-    aLine.setAttribute('x1', x); aLine.setAttribute('x2', x);
-    aLine.setAttribute('y1', lineY); aLine.setAttribute('y2', textY);
-    aLine.setAttribute('stroke', '#c9a96e'); aLine.setAttribute('stroke-width', 0.5);
-    aLine.setAttribute('class', 'evt-marker');
-    svg.appendChild(aLine);
-
-    // Annotation text
-    const txt = document.createElementNS(ns, 'text');
-    txt.setAttribute('x', x); txt.setAttribute('y', above ? textY - 3 : textY + 10);
-    txt.setAttribute('text-anchor', 'middle');
-    txt.setAttribute('fill', '#c9a96e'); txt.setAttribute('font-size', '9');
-    txt.setAttribute('font-family', 'JetBrains Mono, monospace');
-    txt.setAttribute('class', 'evt-marker');
-    txt.textContent = ev.label;
-    svg.appendChild(txt);
   }});
 }}
 
@@ -467,19 +401,6 @@ function updateChart() {{
     }} else {{
       el.style.opacity = 0.07; el.setAttribute('r', 2.5);
     }}
-  }});
-  document.querySelectorAll('.co-label-end').forEach(el => {{
-    const co = el.getAttribute('data-co');
-    if (!activeCompany) {{
-      el.style.opacity = 0.85;
-    }} else if (co === activeCompany) {{
-      el.style.opacity = 1;
-    }} else {{
-      el.style.opacity = 0.07;
-    }}
-  }});
-  document.querySelectorAll('.evt-marker').forEach(el => {{
-    el.style.opacity = activeCompany ? 0.15 : 0.9;
   }});
 }}
 
